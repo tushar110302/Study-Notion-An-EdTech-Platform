@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const tagSchema = new mongoose.Schema({
+const categorySchema = new mongoose.Schema({
     nmae: {
         type: String,
         required: true
@@ -9,7 +9,7 @@ const tagSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    course: [
+    courses: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Course"
@@ -17,4 +17,4 @@ const tagSchema = new mongoose.Schema({
     ],
 }, {timestamps: true});
 
-export const Tag = mongoose.model("Tag", tagSchema);
+export const Category = mongoose.model("Category", tagSchema);

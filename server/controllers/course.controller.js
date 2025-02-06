@@ -1,13 +1,13 @@
 import {Course} from '../models/course.model.js';
-import {Tag} from '../models/tag.model.js';
+import {Category} from '../models/category.model.js';
 import {User} from '../models/user.model.js';
 
 const createCourse = async (req, res) => {
  try {
-    const {courseName, courseDescription, whatYouWillLearn, price, tag } = req.body;
+    const {courseName, courseDescription, whatYouWillLearn, price, category } = req.body;
     const thumbnail = req.file.path;
 
-    if(!courseName || !courseDescription || !whatYouWillLearn || !price || !tag || !thumbnail){
+    if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !thumbnail){
         return res.status(400).json({
             success: false,
             message: "All fields are required"
@@ -27,11 +27,11 @@ const createCourse = async (req, res) => {
         });
     }   
 
-    const tagDetails = await findById(tag);
-    if(!tagDetails){
+    const categoryDetails = await Category.findById(category);
+    if(!categoryDetails){
         return res.status(400).json({
             success: false,
-            message: "Tag not found"
+            message: "category not found"
         });
     }
 
@@ -40,7 +40,7 @@ const createCourse = async (req, res) => {
         courseDescription,
         whatYouWillLearn,
         price,
-        tag,
+        category,
         instructor: instructorId,
         thumbnail: uploadThumbnail.url
     });
@@ -54,10 +54,10 @@ const createCourse = async (req, res) => {
         {new: true}
     );
 
-    await Tag.findByIdAndUpdate(tag,
+    await Category.findByIdAndUpdate(category,
         {
             $push: {
-                course: course._id
+                courses: course._id
             }
         },
         {new: true}
@@ -83,8 +83,9 @@ const getAllCourses = async (req, res) => {
             instructor: 1,
             ratingAndReview: 1,
             studentsEnrolled: 1,
+            category: 1,
             thumbnail: 1
-        }).populate("instructor", "name");
+        }).populate("instructor");
 
         return res.status(200).json({
             success: true,
@@ -98,3 +99,4 @@ const getAllCourses = async (req, res) => {
         }); 
     }
 }
+export {createCourse, getAllCourses};

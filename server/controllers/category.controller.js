@@ -1,6 +1,6 @@
-import { Tag } from "../models/tag.model.js";
+import { Category } from "../models/category.model.js";
 
-const createTag = async (req, res) => {
+const createCategory = async (req, res) => {
     try {
         const {name, description} = req.body;
         if(!name || !description) {
@@ -10,39 +10,43 @@ const createTag = async (req, res) => {
                 message: "Name and Description are required"
             });
         }
-        const tag = await Tag.create({
+        const category = await Category.create({
             name,
             description
         });
+
         return res.status(200)
         .json({
             success: true,
-            message: "Tag created successfully",
-            tag
+            message: "Category created successfully",
+            category
         })
+
     } catch (error) {
         return res.status(500)
         .json({
             success: false,
-            message: "Could not create Tag"
+            message: "Could not create Category"
         });
     }
 }
 
-const getAllTags = async (req, res) => {
+const getAllCategories = async (req, res) => {
     try {
-        const tags = await Tag.find();
+        const categories = await Category.find();
         return res.status(200)
         .json({
             success: true,
-            message: "Tags fetched successfully",
-            tags
+            message: "Categorys fetched successfully",
+            categories
         });
     } catch (error) {
         return res.status(500)
         .json({
             success: false,
-            message: "Could not fetch Tags"
+            message: "Could not fetch Categories"
         });
     }
 }
+
+export {createCategory, getAllCategories};
