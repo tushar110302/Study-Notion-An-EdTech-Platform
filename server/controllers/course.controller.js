@@ -1,6 +1,7 @@
 import {Course} from '../models/course.model.js';
 import {Category} from '../models/category.model.js';
 import {User} from '../models/user.model.js';
+import { uploadOnCloudinary } from '../utils/cloudinary.js';
 
 const createCourse = async (req, res) => {
  try {
@@ -23,7 +24,7 @@ const createCourse = async (req, res) => {
     if(!uploadThumbnail){
         return res.status(400).json({
             success: false,
-            message: "Could not upload thumbnail"
+            message: "Could not upload thumbnail on Cloudinary"
         });
     }   
 

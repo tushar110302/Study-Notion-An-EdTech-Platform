@@ -69,7 +69,7 @@ const updateSection = async (req, res) => {
 const deleteSection = async (req, res) => {
     try {
         const {sectionId} = req.params;
-        // DELETING FROM COURSE 
+        // DELETING FROM COURSE -- TODO
         await Section.findByIdAndDelete(sectionId);
 
         return res.status(200).json({
