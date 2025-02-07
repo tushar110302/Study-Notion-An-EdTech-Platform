@@ -100,4 +100,51 @@ const getAllCourses = async (req, res) => {
         }); 
     }
 }
-export {createCourse, getAllCourses};
+
+const getCourseById = async (req, res) => { 
+    try {
+        const {courseId} = req.body;
+        if(!courseId){
+            return res.status(400).json({
+                success: false,
+                message: "Course ID is required"
+            });
+        }
+
+        const course = await Course.findById(courseId)
+        .populate({
+            path: "instructor",
+            populate: {
+                path: "profileDetails"
+            }
+        })
+        .populate("category")
+        .populate({
+            path: "sections",
+            populate: {
+                path: "subSections"
+            }
+        })
+        .populate("ratingAndReview");
+
+        if(!course){
+            return res.status(404).json({
+                success: false,
+                message: "Course not found"
+            });
+        }   
+
+        return res.status(200).json({
+            success: true,
+            message: "Course fetched successfully",
+            data: course
+        });
+    
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Could not fetch course"
+        });
+    }
+}
+export {createCourse, getAllCourses, getCourseById};

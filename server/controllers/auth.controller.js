@@ -4,6 +4,8 @@ import otpGenerator from 'otp-generator';
 import { Profile } from "../models/profile.model.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { sendMail } from "../utils/mailSender.js";
+import { passwordUpdated } from "../mail/templates/passwordUpdate.js";
 
 const generateToken = (user) => {
     return jwt.sign({
@@ -189,6 +191,9 @@ const changePassword = async (req, res) => {
         }
         user.password = newPassword;
         await user.save();
+
+        const body = passwordUpdated(user.email, user.firstName.concat(" ", user.lastName));
+        const emailResponse = await sendMail(user.email, body, "Password Changed");
 
         return res.status(200)
         .json({
