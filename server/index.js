@@ -1,6 +1,7 @@
 import dotenv from "dotenv/config";
 import { connectDB } from "./config/db.js";
 import app from "./app.js";
+import { OTP } from "./models/otp.model.js";
 
 const port = process.env.PORT || 4000;
 

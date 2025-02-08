@@ -14,7 +14,7 @@ const generateToken = (user) => {
             firstName: user.firstName,
         }, 
         process.env.JWT_SECRET, 
-        {expiresIn: "10m"}
+        {expiresIn: "2h"}
     );
     
 }
@@ -23,7 +23,7 @@ const sendOTP = async (req, res) => {
     try {
         const {email} = req.body;
         const user = await User.findOne({email});
-        console.log(user)
+
         if(user){
             return res.status(401).json({
                 success: false,
@@ -34,19 +34,30 @@ const sendOTP = async (req, res) => {
         const otp = otpGenerator.generate(6, {upperCaseAlphabets: false, specialChars: false, lowerCaseAlphabets: false});
         console.log("OTP Generated", otp);
 
-        const newOtp = new OTP({
-            email,
-            otp
-        });
-
-        const savedOtp = await newOtp.save(newOtp);
-
-        return res.status(200)
-        .json({
-            success: true,
-            message: "OTP sent successfully",
-            savedOtp
-        });
+        const savedDetails = await OTP.findOne({email});
+        if(!savedDetails){
+            const newOTP = await OTP.create({
+                email,
+                otp
+            })
+            return res.status(200)
+            .json({
+                success: true,
+                message: "OTP sent successfully",
+                data: newOTP
+            });
+        }
+        else{
+            savedDetails.otp = otp;
+            await savedDetails.save();
+            return res.status(200)
+            .json({
+                success: true,
+                message: "OTP sent successfully",
+                data: savedDetails 
+            });
+        }
+        
     } catch (error) {
         return res.status(500)
         .json({
@@ -58,9 +69,9 @@ const sendOTP = async (req, res) => {
 
 const singup = async (req, res) => {
     try {
-        const {firstName, lastName, email, password, otp} = req.body;
+        const {firstName, lastName, email, password, otp, accountType} = req.body;
 
-        if(!firstName || !lastName || !email || !password || !otp) { 
+        if(!firstName || !lastName || !email || !password || !otp ) { 
             return res.status(400).json({
                 success: false, 
                 message: "All fields are required"
@@ -101,7 +112,7 @@ const singup = async (req, res) => {
             lastName,
             email,
             password,
-            accountType : "Student",
+            accountType,
             profileDetails: profileDetails._id,
             profileImage: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}+${lastName}`,
         });
@@ -109,7 +120,7 @@ const singup = async (req, res) => {
         return res.status(200)
         .json({
             success: true,
-            newUser,
+            data: newUser,
             message: "User created successfully"}
         );
     } catch (error) {
@@ -154,7 +165,7 @@ const login = async (req, res) => {
         .json({
             success: true,
             message: "Login successful",
-            token
+            data: token
         });
 
 

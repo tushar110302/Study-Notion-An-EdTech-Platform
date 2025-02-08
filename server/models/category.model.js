@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema({
-    nmae: {
+    name: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        trim: true
     },
     description: {
         type: String,
@@ -17,4 +19,4 @@ const categorySchema = new mongoose.Schema({
     ],
 }, {timestamps: true});
 
-export const Category = mongoose.model("Category", tagSchema);
+export const Category = mongoose.model("Category", categorySchema);

@@ -1,5 +1,6 @@
-import { Section } from "../models/section.model";
-import { Course } from "../models/course.model";
+import { Section } from "../models/section.model.js";
+import { Course } from "../models/course.model.js";
+import { SubSection } from "../models/subSection.model.js";
 
 const createSection = async (req, res) => {
     try {
@@ -24,8 +25,8 @@ const createSection = async (req, res) => {
         )
         .populate("category", "name")
         .populate({
-            path: "section",
-            populate: { path: "subSection" }
+            path: "sections",
+            populate: { path: "subSections" }
         });
 
         return res.status(201).json({
@@ -68,20 +69,33 @@ const updateSection = async (req, res) => {
 
 const deleteSection = async (req, res) => {
     try {
-        const {sectionId} = req.params;
-        // DELETING FROM COURSE -- TODO
-        await Section.findByIdAndDelete(sectionId);
+        // const {sectionId} = req.params;
+        const {sectionId, courseId} = req.body;
 
+        // await Course.findByIdAndUpdate(courseId,
+        // {
+        //     $pull: {
+        //         sections: sectionId
+        //     }
+        // })
+        const section = await Section.findByIdAndDelete(sectionId);
+
+        await SubSection.deleteMany({
+            _id:{
+                $in: section.subSections
+            }
+        })
         return res.status(200).json({
             success: true,
-            message: "Section is deleted"
+            message: "Section is deleted Successfully "
         });
         
 
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: "Unable to delete section"
+            message: "Exception Occurred!! Unable to delete section",
+            error: error.message
         });
     }
 }

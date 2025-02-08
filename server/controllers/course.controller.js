@@ -16,9 +16,6 @@ const createCourse = async (req, res) => {
     }
 
     const instructorId = req.user._id;
-    const instructor = await User.findById(instructorId);
-    // console.log(instructor);
-    // console.log(req.user._id);
 
     const uploadThumbnail = await uploadOnCloudinary(thumbnail); 
     if(!uploadThumbnail){
@@ -65,7 +62,7 @@ const createCourse = async (req, res) => {
     return res.status(200).json({
         success: true,
         message: "Course created successfully",
-        course
+        data: course
     });
  } catch (error) {
     return res.status(500).json({
@@ -90,7 +87,7 @@ const getAllCourses = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Courses fetched successfully",
-            allCourses
+            data: allCourses
         });
     } catch (error) {
         return res.status(500).json({
@@ -124,7 +121,7 @@ const getCourseById = async (req, res) => {
                 path: "subSections"
             }
         })
-        .populate("ratingAndReview");
+        // .populate("ratingAndReview");
 
         if(!course){
             return res.status(404).json({

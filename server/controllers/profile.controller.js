@@ -7,7 +7,7 @@ const updateProfile = async (req, res) => {
         const { gender, dateOfBirth="", about="", phone } = req.body;
         const userId = req.user._id;
 
-        if(!gender || !phone){
+        if( !phone){
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
@@ -17,17 +17,17 @@ const updateProfile = async (req, res) => {
         const user = await User.findById(userId);
         const profile = await Profile.findById(user.profileDetails);
 
-        profile.gender= gender;
-        profile.dateOfBirth= dateOfBirth;
-        profile.about= about;
-        profile.phone= phone;
+        profile.gender = gender ? gender : profile.gender;
+        profile.dateOfBirth = dateOfBirth ? dateOfBirth : profile.dateOfBirth;
+        profile.about = about ? about : profile.about;
+        profile.phone = phone ? phone : profile.phone;
 
         await profile.save();
 
         return res.status(200).json({
             success: true,
             message: "Profile updated successfully",
-            profile
+            data: profile
         });
 
     } catch (error) {

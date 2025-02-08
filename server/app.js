@@ -4,6 +4,7 @@ import courseRoutes from "./routes/course.route.js";
 import profileRoutes from "./routes/profile.route.js";
 import paymentRoutes from "./routes/payment.route.js";
 import cookieParser from "cookie-parser";
+import cors from "cors"
 
 const app = express();
 

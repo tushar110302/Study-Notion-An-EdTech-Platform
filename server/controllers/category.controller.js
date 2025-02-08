@@ -10,6 +10,7 @@ const createCategory = async (req, res) => {
                 message: "Name is required"
             });
         }
+
         const category = await Category.create({
             name,
             description
@@ -19,15 +20,16 @@ const createCategory = async (req, res) => {
         .json({
             success: true,
             message: "Category created successfully",
-            category
+            data: category
         })
 
     } catch (error) {
         return res.status(500)
         .json({
             success: false,
-            message: "Could not create Category"
-        });
+            message: "Exception Occured!! Could not create Category",
+            error: error.message
+        })
     }
 }
 
@@ -37,14 +39,15 @@ const getAllCategories = async (req, res) => {
         return res.status(200)
         .json({
             success: true,
-            message: "Categorys fetched successfully",
-            categories
+            message: "ALL Categories fetched successfully",
+            data: categories
         });
     } catch (error) {
         return res.status(500)
         .json({
             success: false,
-            message: "Could not fetch Categories"
+            message: "Exception Occurred!! Could not fetch Categories",
+            error: error.message
         });
     }
 }

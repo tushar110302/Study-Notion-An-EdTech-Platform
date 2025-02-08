@@ -102,7 +102,9 @@ const getAverageRating = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Average rating fetched successfully",
-            averageRating: result[0].averageRating
+            data: {
+                averageRating: result[0].averageRating
+            }
         });
          
     } catch (error) {
@@ -120,7 +122,7 @@ const getAllRatingAndReviews = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Ratings and reviews fetched successfully",
-            allRatingAndReviews
+            data: allRatingAndReviews
         });
 
     } catch (error) {

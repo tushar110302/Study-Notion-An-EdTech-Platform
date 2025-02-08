@@ -11,9 +11,14 @@ const optSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    expireAt: {
+        type: Date,
+        default: Date.now() + 10 * 60 * 1000   // expires in 10 minutes
+    },
+
 }, {timestamps: true});
 
-optSchema.index({createdAt: 1}, {expireAfterSeconds: 6000});
+optSchema.index({expireAt : 1}, {expireAfterSeconds: 0})
 
 optSchema.pre('save', async function (next) {
     try {
@@ -26,5 +31,6 @@ optSchema.pre('save', async function (next) {
         console.error("Could not send mail before saving", error)
     }
 })
+
 
 export const OTP = mongoose.model("OTP", optSchema);

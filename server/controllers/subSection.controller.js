@@ -5,9 +5,10 @@ import {uploadOnCloudinary} from '../utils/cloudinary.js';
 const createSubSection = async (req, res) => {
 
     try {
-        const {title, description, sectionID } = req.body;
+        const {title, description, sectionId } = req.body;
         const videoUrl = req.file.path;
-        if(!title || !description || !sectionID || !videoUrl){
+
+        if(!title || !description || !sectionId || !videoUrl){
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
@@ -27,7 +28,7 @@ const createSubSection = async (req, res) => {
             description,
             videoUrl: uploadVideo.url
         });
-        const updatedSection = await Section.findByIdAndUpdate(sectionID,
+        const updatedSection = await Section.findByIdAndUpdate(sectionId,
             {
                 $push: {
                     subSections: newSubSection._id
@@ -36,7 +37,6 @@ const createSubSection = async (req, res) => {
             {new: true}
         ).populate("subSections");
 
-        console.log(updatedSection)
 
         return res.status(201).json({
             success: true,
@@ -54,9 +54,9 @@ const createSubSection = async (req, res) => {
 
 const updateSubSection = async (req, res) => {
     try {
-        const {title, description, subSectionID } = req.body;
+        const {title, description, subSectionId } = req.body;
         // CHECK IF ALL FIELDS ARE PROVIDED AND THINK WHAT TO DO IF ALL FIELDS ARE NOT PROVIDED
-        const subSection = await SubSection.findById(subSectionID)
+        const subSection = await SubSection.findById(subSectionId)
   
         if (!subSection) {
             return res.status(404).json({
@@ -64,14 +64,10 @@ const updateSubSection = async (req, res) => {
             message: "SubSection not found",
             })
         }
-    
-        if (title !== undefined) {
-            subSection.title = title
-        }
-    
-        if (description !== undefined) {
-            subSection.description = description
-        }
+        
+        subSection.title = title ? title : subSection.title;
+        subSection.description = description ? description : subSection.description;
+
         if (req.file && req.file.path !== undefined) {
             const video = req.file.path
             const uploadDetails = await uploadOnCloudinary(video)
@@ -96,16 +92,16 @@ const updateSubSection = async (req, res) => {
 
 const deleteSubSection = async (req, res) => {
     try {
-        const {subSectionID, sectionId} = req.body;
+        const {subSectionId, sectionId} = req.body;
 
-        await Section.findByIdAndUpdate(sectionId,
-            {
-                $pull: {
-                    subSections: subSectionID
-                }
-            }
-        )
-        await SubSection.findByIdAndDelete(subSectionID);
+        // await Section.findByIdAndUpdate(sectionId,
+        //     {
+        //         $pull: {
+        //             subSections: subSectionId
+        //         }
+        //     }
+        // )
+        await SubSection.findByIdAndDelete(subSectionId);
 
         return res.status(200).json({
             success: true,

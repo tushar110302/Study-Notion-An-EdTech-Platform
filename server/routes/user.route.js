@@ -17,7 +17,7 @@ router.route("/signup").post(singup);
 // Route for sending OTP to the user's email
 router.route("/sendotp").post(sendOTP);
 // Route for Changing the password
-router.route("/changepassword").get(verifyJWT, changePassword);
+router.route("/changePassword").post(verifyJWT, changePassword);
 
 
 export default router;

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {deleteAccount, getEnrolledCourses, getUserDetails, updateDisplayPicture, updateProfile} from "../controllers/profile.controller.js"
-import { verifyJWT } from "../middlewares/auth";
+import { verifyJWT } from "../middlewares/auth.js";
 import { upload } from "../middlewares/multer.js";
 
 const router = Router()
