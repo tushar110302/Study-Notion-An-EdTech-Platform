@@ -14,7 +14,16 @@ const createRating = async (req, res) => {
             });
         }
 
-        const course = await Course.findOne(courseId);
+        const course = await Course.findOne( {courseId,
+            studentsEnrolled: {$elemMatch: {$eq: userId} }
+        });
+
+        if(!course){
+            return res.status(404).json({
+                success: false,
+                message: "Student is not enrolled in this course"
+            });
+        }
 
 
         const checkReviewed = await RatingAndReview.findOne({user: userId, course: courseId});
@@ -43,7 +52,7 @@ const createRating = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Rating and Review created successfully",
-            newRatingAndReview
+            data: newRatingAndReview
         })
 
     } catch (error) {

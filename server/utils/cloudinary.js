@@ -7,7 +7,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-export const uploadOnCloudinary = async (localPath) => {
+export const uploadOnCloudinary = async (localPath, height, quality) => {
     try {
         const options = {
             folder: "Server Uploads",

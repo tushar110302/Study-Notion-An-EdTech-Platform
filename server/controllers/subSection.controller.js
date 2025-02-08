@@ -1,13 +1,13 @@
-import {subSection} from '../models/subSection.model.js';    
+import {SubSection} from '../models/subSection.model.js';    
 import {Section} from '../models/section.model.js';
 import {uploadOnCloudinary} from '../utils/cloudinary.js';
 
 const createSubSection = async (req, res) => {
 
     try {
-        const {title, duration, description, sectionID } = req.body;
+        const {title, description, sectionID } = req.body;
         const videoUrl = req.file.path;
-        if(!title || !duration || !description || !sectionID || !videoUrl){
+        if(!title || !description || !sectionID || !videoUrl){
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
@@ -21,16 +21,16 @@ const createSubSection = async (req, res) => {
             });
         }
 
-        const savedSubSection = await subSection.create({
+        const newSubSection = await SubSection.create({
             title,
-            duration,
+            duration: `${uploadVideo.duration}`,
             description,
             videoUrl: uploadVideo.url
         });
         const updatedSection = await Section.findByIdAndUpdate(sectionID,
             {
                 $push: {
-                    subSections: savedSubSection._id
+                    subSections: newSubSection._id
                 }
             },
             {new: true}
@@ -41,7 +41,7 @@ const createSubSection = async (req, res) => {
         return res.status(201).json({
             success: true,
             message: "SubSection created successfully",
-            updatedSection
+            data: updatedSection
         });
     } catch (err) {
         return res.status(500).json({
@@ -54,18 +54,37 @@ const createSubSection = async (req, res) => {
 
 const updateSubSection = async (req, res) => {
     try {
-        const {title, duration, description, subSectionID } = req.body;
+        const {title, description, subSectionID } = req.body;
         // CHECK IF ALL FIELDS ARE PROVIDED AND THINK WHAT TO DO IF ALL FIELDS ARE NOT PROVIDED
-        const updatedSubSection = await subSection.findByIdAndUpdate(subSectionID, {
-            title,
-            duration,
-            description
-        }, {new: true});
-
+        const subSection = await SubSection.findById(subSectionID)
+  
+        if (!subSection) {
+            return res.status(404).json({
+            success: false,
+            message: "SubSection not found",
+            })
+        }
+    
+        if (title !== undefined) {
+            subSection.title = title
+        }
+    
+        if (description !== undefined) {
+            subSection.description = description
+        }
+        if (req.file && req.file.path !== undefined) {
+            const video = req.file.path
+            const uploadDetails = await uploadOnCloudinary(video)
+            subSection.videoUrl = uploadDetails.secure_url
+            subSection.duration = `${uploadDetails.duration}`
+        }
+    
+        await subSection.save()
+    
         return res.status(200).json({
             success: true,
             message: "SubSection is updated",
-            updatedSubSection
+            data: subSection
         });
     } catch (error) {
         return res.status(500).json({
@@ -77,9 +96,16 @@ const updateSubSection = async (req, res) => {
 
 const deleteSubSection = async (req, res) => {
     try {
-        const {subSectionID} = req.params;
+        const {subSectionID, sectionId} = req.body;
 
-        await subSection.findByIdAndDelete(subSectionID);
+        await Section.findByIdAndUpdate(sectionId,
+            {
+                $pull: {
+                    subSections: subSectionID
+                }
+            }
+        )
+        await SubSection.findByIdAndDelete(subSectionID);
 
         return res.status(200).json({
             success: true,

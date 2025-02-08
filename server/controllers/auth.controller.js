@@ -14,7 +14,7 @@ const generateToken = (user) => {
             firstName: user.firstName,
         }, 
         process.env.JWT_SECRET, 
-        {expiresIn: "3m"}
+        {expiresIn: "10m"}
     );
     
 }
@@ -25,7 +25,7 @@ const sendOTP = async (req, res) => {
         const user = await User.findOne({email});
         console.log(user)
         if(user){
-            return res.status(400).json({
+            return res.status(401).json({
                 success: false,
                 message: "User already exists"}
             );
@@ -184,7 +184,7 @@ const changePassword = async (req, res) => {
         const user = await User.findById(req.user._id);
         const check = await bcrypt.compare(oldPassword, user.password);
         if(!check){
-            return res.status(400).json({
+            return res.status(401).json({
                 success: false,
                 message: "Invalid password"
             });

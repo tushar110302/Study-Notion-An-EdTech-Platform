@@ -5,10 +5,10 @@ import { uploadOnCloudinary } from '../utils/cloudinary.js';
 
 const createCourse = async (req, res) => {
  try {
-    const {courseName, courseDescription, whatYouWillLearn, price, category } = req.body;
+    const {courseName, courseDescription, whatYouWillLearn, price, category, tag } = req.body;
     const thumbnail = req.file.path;
 
-    if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !thumbnail){
+    if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !thumbnail || !tag){
         return res.status(400).json({
             success: false,
             message: "All fields are required"
@@ -17,8 +17,8 @@ const createCourse = async (req, res) => {
 
     const instructorId = req.user._id;
     const instructor = await User.findById(instructorId);
-    console.log(instructor);
-    console.log(req.user._id);
+    // console.log(instructor);
+    // console.log(req.user._id);
 
     const uploadThumbnail = await uploadOnCloudinary(thumbnail); 
     if(!uploadThumbnail){
@@ -43,7 +43,8 @@ const createCourse = async (req, res) => {
         price,
         category,
         instructor: instructorId,
-        thumbnail: uploadThumbnail.url
+        thumbnail: uploadThumbnail.url,
+        tag
     });
 
     await User.findByIdAndUpdate(instructorId, 
@@ -51,8 +52,7 @@ const createCourse = async (req, res) => {
             $push: {
                 courses: course._id
             }
-        },
-        {new: true}
+        }
     );
 
     await Category.findByIdAndUpdate(category,
@@ -60,8 +60,7 @@ const createCourse = async (req, res) => {
             $push: {
                 courses: course._id
             }
-        },
-        {new: true}
+        }
     );
     return res.status(200).json({
         success: true,
@@ -79,13 +78,13 @@ const createCourse = async (req, res) => {
 const getAllCourses = async (req, res) => {
     try {
         const allCourses = await Course.find({}, {
-            courseName: 1,
-            price: 1,
-            instructor: 1,
-            ratingAndReview: 1,
-            studentsEnrolled: 1,
-            category: 1,
-            thumbnail: 1
+            courseName: true,
+            price: true,
+            instructor: true,
+            ratingAndReview: true,
+            studentsEnrolled: true,
+            category: true,
+            thumbnail: true
         }).populate("instructor");
 
         return res.status(200).json({

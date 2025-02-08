@@ -1,5 +1,8 @@
 import express from "express";
-import authRouter from "./routes/auth.route.js";
+import userRoutes from "./routes/user.route.js";
+import courseRoutes from "./routes/course.route.js";
+import profileRoutes from "./routes/profile.route.js";
+import paymentRoutes from "./routes/payment.route.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -11,7 +14,18 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(express.static("public"))
 
-app.use("/user", authRouter);
+app.use("/api/v1/auth", userRoutes);
+app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/course", courseRoutes);
+app.use("/api/v1/payment", paymentRoutes);
+
+app.get("/", (req, res) => {
+	return res.json({
+		success:true,
+		message:'Your server is up and running....'
+	});
+});
 
 export default app

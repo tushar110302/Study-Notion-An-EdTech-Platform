@@ -3,11 +3,11 @@ import { Category } from "../models/category.model.js";
 const createCategory = async (req, res) => {
     try {
         const {name, description} = req.body;
-        if(!name || !description) {
+        if(!name) {
             return res.status(400)
             .json({
                 success: false,
-                message: "Name and Description are required"
+                message: "Name is required"
             });
         }
         const category = await Category.create({
@@ -49,14 +49,12 @@ const getAllCategories = async (req, res) => {
     }
 }
 
-const categoryPageDetails = async (req, res) => {
+const getCategoryPageDetails = async (req, res) => {
     try {
         //get categoryId
         const {categoryId} = req.body;
         //get courses for specified categoryId
-        const selectedCategory = await Category.findById(categoryId)
-                                        .populate("courses")
-                                        .exec();
+        const selectedCategory = await Category.findById(categoryId).populate("courses").exec();
         //validation
         if(!selectedCategory) {
             return res.status(404).json({
@@ -97,4 +95,4 @@ const categoryPageDetails = async (req, res) => {
     }
 }
 
-export {createCategory, getAllCategories};
+export {createCategory, getAllCategories, getCategoryPageDetails};

@@ -88,7 +88,7 @@ const verifySignature = async (req, res) => {
                 message: 'Invalid Signature'
             });
         }
-        console.log("Request is legit");
+        console.log("Request is Authorised");
         console.log(req.body);
 
         const {courseId, userId} = req.body.payload.payment.entity.notes;
@@ -103,6 +103,7 @@ const verifySignature = async (req, res) => {
                 new: true
             }
         );
+        console.log("Course Updated: ");
         console.log(course);
 
         const user = await User.findByIdAndUpdate(userId,
