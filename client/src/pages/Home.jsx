@@ -5,6 +5,11 @@ import UtilityButton from '../components/Home/UtilityButton'
 import banner from "../assets/Images/banner.mp4"
 import TextBlock from '../components/Home/TextBlock'
 import CodeBlock from '../components/Home/CodeBlock'
+import LearnLanguageSection from '../components/Home/LearnLanguageSection'
+import TimelineSection from '../components/Home/TimelineSection'
+import InstructorSection from '../components/Home/InstructorSection'
+import ReviewSlider from '../components/Home/ReviewSlider'
+import Footer from '../components/Footer'
 
 function Home() {
   return (
@@ -67,6 +72,63 @@ function Home() {
                 />
             </div>
         </div>
+
+        <div className='bg-pure-greys-5 text-richblack-700'>
+          <div className='homepage_bg h-[333px]'>
+
+              <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
+
+                  <div className="lg:h-[150px]"></div>
+                  <div className='flex gap-7 text-white lg:mt-8'>
+                    <UtilityButton 
+                      text={
+                        <div className='flex items-center gap-2'>
+                          Explore Full Catalog
+                          <FaArrowRight className='text-xs'/>
+                        </div>
+                      } 
+                      active={true}
+                      to={"/signup"}
+                      />
+                    <UtilityButton
+                      text={"Learn More"}
+                      active={false}
+                      to={"/login"} />
+                  </div>
+              </div>
+          </div>
+
+          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
+              <div className='mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0'>
+                <div className='text-4xl lg:w-[45%] font-medium'>
+                  Get the skills you need for a <span className="bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text font-bold">job that is in demand.</span>
+                </div>
+                <div className='lg:w-[40%] flex flex-col gap-10 items-start '>
+                  <div className='text-[16px]'>
+                    The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
+                  </div>
+                  <UtilityButton text={"Learn More"} active={true} to={"/signup"} />
+                </div>
+              </div>
+
+              <TimelineSection />
+              <LearnLanguageSection />
+          </div>
+
+        </div>
+
+        <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
+        {/* Become a instructor section */}
+          <InstructorSection />
+
+          {/* Reviws from Other Learner */}
+          <h1 className="text-center text-4xl my-10">
+            Reviews from other learners
+          </h1>
+          <ReviewSlider />
+      </div>
+
+      <Footer />
          
     </div>
   )

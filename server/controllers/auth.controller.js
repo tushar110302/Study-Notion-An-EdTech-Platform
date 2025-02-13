@@ -177,10 +177,7 @@ const login = async (req, res) => {
         );
     }
 }
-const check = (req, res)=>{
 
-    return res.json(req.user)
-}
 //change pass
 const changePassword = async (req, res) => {
     try {
