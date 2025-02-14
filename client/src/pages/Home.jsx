@@ -10,6 +10,7 @@ import TimelineSection from '../components/Home/TimelineSection'
 import InstructorSection from '../components/Home/InstructorSection'
 import ReviewSlider from '../components/Home/ReviewSlider'
 import Footer from '../components/Footer'
+import ExploreMore from '../components/Home/ExploreMore'
 
 function Home() {
   return (
@@ -43,7 +44,7 @@ function Home() {
               </video>
             </div>
 
-            <div className='flex flex-row my-20 justify-between gap-10'>
+            <div className='flex flex-row lg:my-20 my-10 justify-between gap-10 '>
               <TextBlock 
                 heading={<div>Unlock your <span className="bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text font-bold">coding potential</span> with our online courses.</div>}
                 subHeading={"Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."} 
@@ -57,20 +58,22 @@ function Home() {
               />
             </div>
 
-            <div className='flex flex-row my-20 justify-between gap-10'>
+            <div className='flex flex-row lg:my-20 my-10 justify-between gap-10'>
               <CodeBlock
                 text={`<!DOCTYPE html>\n<html>\n<head> <title>Example</title> <linkrel="stylesheet" href="styles.css">\n</head>\n<body>\n<h1> <a href="/">Header</a>\n</h1>\n<nav> <a href="one/">One</a>\n<a href="two/">Two</a\n<a href="three/">Three</a>\n</nav>`}
                 codeColor={"text-white"}
                 backgroundGradient={<div className='codeblock2 absolute'></div>}
               />
               <TextBlock 
-                heading={<div>Start  <span className="bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text font-bold">coding <br/> in seconds</span></div>}
+                heading={<div>Start  <span className="bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text font-bold">coding in seconds</span></div>}
                 subHeading={"Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."} 
                 btn1={{text:"Continue Lesson", active:true, to:"/signup"}}
                 btn2={{text:"Learn More", active:false, to:"/login"}} 
                 
                 />
             </div>
+            
+            <ExploreMore/>
         </div>
 
         <div className='bg-pure-greys-5 text-richblack-700'>
@@ -99,12 +102,12 @@ function Home() {
           </div>
 
           <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
-              <div className='mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0'>
-                <div className='text-4xl lg:w-[45%] font-medium'>
+              <div className='mb-10 mt-[-100px] flex flex-col lg:justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0'>
+                <div className='text-4xl lg:w-[45%] text-center lg:text-left '>
                   Get the skills you need for a <span className="bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text font-bold">job that is in demand.</span>
                 </div>
-                <div className='lg:w-[40%] flex flex-col gap-10 items-start '>
-                  <div className='text-[16px]'>
+                <div className='lg:w-[40%] flex flex-col gap-10 lg:items-start items-center'>
+                  <div className='text-[16px] text-center lg:text-left'>
                     The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
                   </div>
                   <UtilityButton text={"Learn More"} active={true} to={"/signup"} />
