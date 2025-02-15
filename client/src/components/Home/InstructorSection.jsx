@@ -15,7 +15,7 @@ function InstructorSection() {
                 />
             </div>
             <div className='flex flex-col gap-4 lg:w-[40%] items-center lg:items-start'>
-                <div className="lg:w-[50%] text-4xl  ">
+                <div className="lg:w-[50%] text-4xl ">
                     Become an <span className="bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text font-bold">instructor</span>
                 </div>
                 <p className="tracking-wide text-[15px] text-justify w-[90%] text-richblack-300">
