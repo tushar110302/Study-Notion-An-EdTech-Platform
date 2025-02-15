@@ -4,6 +4,8 @@ import Navbar from "./components/Navbar"
 
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
+import ForgotPassword from "./pages/ForgotPassword"
+import UpdatePassword from "./pages/UpdatePassword"
 
 function App() {
 
@@ -14,6 +16,14 @@ function App() {
         <Route path="" element={<Home/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup/>}/>
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
+        <Route path="update-password/:id" 
+          element={
+            // <OpenRoute>
+              <UpdatePassword />
+            // </OpenRoute>
+          }
+        />
       </Routes>
      
     </div>

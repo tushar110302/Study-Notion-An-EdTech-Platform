@@ -14,7 +14,7 @@ const generateToken = (user) => {
             firstName: user.firstName,
         }, 
         process.env.JWT_SECRET, 
-        {expiresIn: "2h"}
+        {expiresIn: "24h"}
     );
     
 }
@@ -23,7 +23,7 @@ const sendOTP = async (req, res) => {
     try {
         const {email} = req.body;
         const user = await User.findOne({email});
-
+        console.log(user)
         if(user){
             return res.status(401).json({
                 success: false,
@@ -39,7 +39,8 @@ const sendOTP = async (req, res) => {
             const newOTP = await OTP.create({
                 email,
                 otp
-            })
+            });
+
             return res.status(200)
             .json({
                 success: true,
@@ -48,6 +49,7 @@ const sendOTP = async (req, res) => {
             });
         }
         else{
+
             savedDetails.otp = otp;
             await savedDetails.save();
             return res.status(200)
@@ -143,9 +145,9 @@ const login = async (req, res) => {
         }   
         const user = await User.findOne({email});
         if(!user){
-            return res.status(400).json({
+            return res.status(401).json({
                 success: false,
-                message: "User not found"
+                message: "User not Registered"
             });
         }   
         const check = await bcrypt.compare(password, user.password);
@@ -164,8 +166,11 @@ const login = async (req, res) => {
         res.cookie("token", token, options).status(200)
         .json({
             success: true,
-            message: "Login successful",
-            data: token
+            message: "Login successfull",
+            data: {
+                user,
+                token
+            }
         });
 
 

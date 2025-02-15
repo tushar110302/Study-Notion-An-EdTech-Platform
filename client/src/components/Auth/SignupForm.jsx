@@ -32,7 +32,7 @@ function SignUpForm() {
         const signupData = {...formData, accountType};
 
         dispatch(setSignupData(signupData));
-        dispatch(sendOtp(formData.email, navigate));
+        sendOtp(formData.email, navigate, dispatch);
 
         setFormData({fname: "", lname: "", email:"", password: "", confirmPassword: ""});
         setAccountType("student");

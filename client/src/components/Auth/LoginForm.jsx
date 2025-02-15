@@ -19,7 +19,8 @@ function LoginForm() {
     }
     function handleSubmit(e){
         e.preventDefault();
-        dispatch(login(formData.email, formData.password, navigate))
+        // dispatch(login(formData.email, formData.password, navigate))
+        login(formData.email, formData.password, navigate, dispatch)
     }
   return (
     <form className="flex flex-col w-full gap-y-4 mt-6 my-auto" onSubmit={handleSubmit}>

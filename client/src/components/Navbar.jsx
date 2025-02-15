@@ -51,7 +51,7 @@ function Navbar(){
                                     <TiArrowSortedDown />
                                     {
                                         catalogLinks.length > 0 &&
-                                            <div className="lg:w-[300px] transition-all duration-200 z-1000 bg-richblack-5 p-4 rounded-lg flex flex-col absolute top-10 -left-28 invisible opacity-0 group-hover:visible group-hover:opacity-100">
+                                            <div className="lg:w-[300px] transition-all duration-200 z-[1000] bg-richblack-5 p-4 rounded-lg flex flex-col absolute top-10 -left-28 invisible opacity-0 group-hover:visible group-hover:opacity-100">
                                                 <div className="h-6 w-6 top-0 translate-y-[-40%] left-40 translate-x-[30%]  bg-richblack-5 absolute rotate-45 rounded -z-10 transition-all duration-200"></div>
                                                 {
                                                     catalogLinks.map((item) => (
