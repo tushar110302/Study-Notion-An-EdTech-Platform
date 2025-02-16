@@ -8,7 +8,7 @@ import { sendOtp } from "../../services/operations/authAPI"
 
 function SignUpForm() {
 
-    const [formData, setFormData] = useState({fname: "", lname: "", email:"", password: "", confirmPassword: ""});
+    const [formData, setFormData] = useState({firstName: "", lastName: "", email:"", password: "", confirmPassword: ""});
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [accountType, setAccountType] = useState("student");
@@ -34,7 +34,7 @@ function SignUpForm() {
         dispatch(setSignupData(signupData));
         await sendOtp(formData.email, navigate, dispatch);
 
-        setFormData({fname: "", lname: "", email:"", password: "", confirmPassword: ""});
+        setFormData({firstName: "", lastName: "", email:"", password: "", confirmPassword: ""});
         setAccountType("student");
     }
 
@@ -58,13 +58,13 @@ function SignUpForm() {
                     <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'>
                         First Name<sup className='text-pink-200'>*</sup>
                     </p>
-                    <input type='text' name='fname' placeholder='First Name' required value={formData.fname} onChange={changeHandler} className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]' />
+                    <input type='text' name='firstName' placeholder='First Name' required value={formData.firstName} onChange={changeHandler} className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]' />
                 </label>
                 <label className='w-full'>
                     <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'>
                         Last Name<sup className='text-pink-200'>*</sup>
                     </p>
-                    <input type='text' name='lname' placeholder='Last Name' required value={formData.lname} onChange={changeHandler} className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'  />
+                    <input type='text' name='lastName' placeholder='Last Name' required value={formData.lastName} onChange={changeHandler} className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'  />
                 </label>
             </div>
             

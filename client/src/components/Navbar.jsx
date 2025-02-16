@@ -6,7 +6,6 @@ import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import ProfileDropDown from "./Auth/ProfileDropDown"
 import { apiConnector } from "../services/apiConnector"
-
 import { categories } from "../services/api"
 
 function Navbar(){
@@ -105,30 +104,10 @@ function Navbar(){
                                 </button>
                             </Link>
                     }
-                    {/* {
-                        isLoggedIn &&
-                            <Link to="/">
-                                <button onClick={() => {
-                                    toast.success("Logged Out")
-   
-                                }} className='bg-richblack-800 text-richblack-100 py-[8px] hover:text-richblack-5 px-[18px] rounded-[8px] border border-richblack-700 hover:border-richblack-5'>
-                                    Log Out
-                                </button>
-                            </Link>
-                    }
-                    {
-                        isLoggedIn &&
-                            <Link to="dashboard">
-                                <button className='bg-richblack-800 text-richblack-100 py-[8px] hover:text-richblack-5 px-[18px] rounded-[8px] border border-richblack-700 hover:border-richblack-5'>
-                                    Dashboard
-                                </button>
-                            </Link>
-                    } */}
                     {
                         token && <ProfileDropDown />
                     }
                     
-
                 </div>
                 <button className="mr-4 md:hidden">
                     <AiOutlineMenu fontSize={24} fill="#AFB2BF" />

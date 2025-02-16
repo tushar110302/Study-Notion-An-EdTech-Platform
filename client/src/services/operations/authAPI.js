@@ -1,6 +1,5 @@
 import toast from "react-hot-toast";
 import { authEndpoints } from "../api"
-import { useDispatch } from "react-redux";
 import { setLoading, setToken } from "../../slices/authSlice";
 import { setUser } from "../../slices/profileSlice";
 import { apiConnector } from "../apiConnector";
@@ -58,6 +57,40 @@ export const login = async(email, password, navigate, dispatch) =>{
     }
     toast.dismiss(toastId);
     dispatch(setLoading(false));
+}
+
+export const signup = async(firstName, lastName, email, password, otp, accountType, navigate, dispatch) => {
+    
+    dispatch(setLoading(true));
+    const toastId = toast.loading("Loading...");
+
+    try {
+        const response = await apiConnector("POST", SIGNUP_API, {
+            firstName, 
+            lastName, 
+            email, 
+            password, 
+            otp, 
+            accountType
+        });
+        console.log("Signup Response");
+        console.log(response);
+
+        if(!response.data.success){
+            console.log("SIGNUP FAILED.............");
+            return;
+        }
+        toast.success("Signup Successful");
+        navigate("/login");
+
+    } catch (error) {
+        console.log("SIGNUP API ERROR............", error)
+        toast.error("Signup Failed")
+        navigate("/signup")
+    }
+    dispatch(setLoading(false));
+    toast.dismiss(toastId);
+
 }
 
 export const resertPasswordToken = async(email, setEmailSent, navigate, dispatch) =>{
