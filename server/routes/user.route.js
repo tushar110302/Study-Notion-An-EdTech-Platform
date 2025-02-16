@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { changePassword, login, sendOTP, singup } from "../controllers/auth.controller.js";
+import { changePassword, login, resetPassword, resetPasswordToken, sendOTP, singup } from "../controllers/auth.controller.js";
 import { verifyJWT } from "../middlewares/auth.js";
 
 const router = Router();
@@ -18,6 +18,13 @@ router.route("/signup").post(singup);
 router.route("/sendotp").post(sendOTP);
 // Route for Changing the password
 router.route("/changePassword").post(verifyJWT, changePassword);
+
+
+// Route for generating a reset password token
+router.route("/reset-password-token").post( resetPasswordToken);
+
+// Route for resetting user's password after verification
+router.route("/reset-password").post(resetPassword);
 
 
 export default router;

@@ -17,10 +17,9 @@ function LoginForm() {
             [name]: value
         }))
     }
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault();
-        // dispatch(login(formData.email, formData.password, navigate))
-        login(formData.email, formData.password, navigate, dispatch)
+        await login(formData.email, formData.password, navigate, dispatch)
     }
   return (
     <form className="flex flex-col w-full gap-y-4 mt-6 my-auto" onSubmit={handleSubmit}>
@@ -40,7 +39,7 @@ function LoginForm() {
             <span onClick={() => setShowPassword(prev => !prev)} className='absolute right-3 top-[38px] cursor-pointer'>
                 {showPassword ?  <AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF' />: <AiOutlineEye fontSize={24} fill='#AFB2BF'/>}
             </span>
-            <Link>
+            <Link to={"/forgot-password"}>
                 <p className='text-xs mt-1 text-blue-100 max-w-max ml-auto'>
                     Forgot Password
                 </p>

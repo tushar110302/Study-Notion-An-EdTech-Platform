@@ -23,7 +23,7 @@ function SignUpForm() {
         }))
     }
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault();
         if (formData.password !== formData.confirmPassword) {
             toast.error("Passwords Do Not Match");
@@ -32,7 +32,7 @@ function SignUpForm() {
         const signupData = {...formData, accountType};
 
         dispatch(setSignupData(signupData));
-        sendOtp(formData.email, navigate, dispatch);
+        await sendOtp(formData.email, navigate, dispatch);
 
         setFormData({fname: "", lname: "", email:"", password: "", confirmPassword: ""});
         setAccountType("student");

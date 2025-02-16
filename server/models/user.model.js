@@ -42,6 +42,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    resetPasswordToken: {
+        type: String,
+    },
+    resetPasswordTokenExpire: {
+        type: Date,
+    },
     courseProgress: [
         {
             type: mongoose.Schema.Types.ObjectId,

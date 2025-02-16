@@ -1,12 +1,20 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BiArrowBack } from "react-icons/bi"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { resertPasswordToken } from '../services/operations/authAPI';
 
 function ForgotPassword() {
     const {loading} = useSelector(state => state.auth);
     const [mailSent, setMailSent] = useState(false);
     const [email, setEmail] = useState("");
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    async function handleSubmit(e){
+        e.preventDefault();
+        await resertPasswordToken(email, setMailSent, navigate, dispatch);
+    }
   return (
     <div className='m-auto'>
         {
@@ -18,13 +26,13 @@ function ForgotPassword() {
                             !mailSent ? "Reset Password" : "Check Your Email"
                         }
                     </h1>
-                    <p className="my-4 text-[1.125rem] leading-[1.625rem] text-richblack-100">
+                    <p className="my-8 text-[1.125rem] leading-[1.625rem] text-richblack-100">
                         {
                             !mailSent ? "Have no fear. We'll email you instructions to reset your password. If you dont have access to your email we can try account recovery" 
                             : `We have sent the reset email to ${email}` 
                         }
                     </p>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         {
                             !mailSent && 
                                 <label className="w-full">
@@ -42,14 +50,15 @@ function ForgotPassword() {
                                     />
                                 </label>
                         }
-                        <button type="submit" className="mt-6 w-full rounded-[8px] bg-yellow-50 py-[12px] px-[12px] font-medium text-richblack-900" >
+                        <button className="mt-8 w-full rounded-[8px] bg-yellow-50 py-[12px] px-[12px] font-medium text-richblack-900" >
                             { !mailSent ? "Submit" : "Resend Email" }
                         </button>
                     </form>
                     <div className="mt-6 flex items-center justify-between">
                         <Link to="/login">
                             <p className="flex items-center gap-x-2 text-richblack-5">
-                                <BiArrowBack /> Back To Login
+                                <BiArrowBack /> 
+                                Back To Login
                             </p>
                         </Link>
                     </div>

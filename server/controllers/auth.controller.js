@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { sendMail } from "../utils/mailSender.js";
 import { passwordUpdated } from "../mail/templates/passwordUpdate.js";
+import crypto from 'crypto';
 
 const generateToken = (user) => {
     return jwt.sign({
@@ -206,7 +207,7 @@ const changePassword = async (req, res) => {
         await user.save();
 
         const body = passwordUpdated(user.email, user.firstName.concat(" ", user.lastName));
-        const emailResponse = await sendMail(user.email, body, "Password Changed");
+        await sendMail(user.email, body, "Password Changed");
 
         return res.status(200)
         .json({
@@ -222,22 +223,80 @@ const changePassword = async (req, res) => {
     }
 }
 
-//forgot pass
-const resetPassword = async (req, res) => { 
-    const {email} = req.body;
-    if(!email){
-        return res.status(400).json({
+const resetPasswordToken = async (req, res) => {
+    try {   
+        const {email} = req.body;
+        const user = await User.findOne({email});
+
+        if(!user){
+            return res.status(404).json({
+                success: false,
+                message: "User not found with this email"
+            })
+        }
+
+        const resetToken = crypto.randomBytes(20).toString("hex");
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordTokenExpire = Date.now() + 3600000; 
+        await user.save();
+
+        const resetPasswordUrl = `${process.env.FRONTEND_URL}/update-password/${resetToken}`;
+
+        await sendMail(email, `Your Link for email verification is ${resetPasswordUrl}. Please click this url to reset your password.`, "Password Reset Request");
+
+        return res.status(200)
+        .json({
+            success: true,
+            message: "Email sent successfully",
+            resetToken
+        })
+
+
+    } catch (error) {
+        return res.status(500).json({
             success: false,
-            message: "Email is required"
+            message: "Could not send reset password token"
         });
     }
-    const user = await User.find({email});
-    if(!user){
-        return res.status(400).json({
-            success: false,
-            message: "User not found"
+}
+//forgot pass
+const resetPassword = async (req, res) => { 
+    try {
+        const {password, token} = req.body;
+    
+        const user = await User.findOne({resetPasswordToken: token});
+    
+        if(!user){
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }   
+        if(user.resetPasswordTokenExpire < Date.now()){
+            return res.status(400).json({
+                success: false,
+                message: "Token expired. Please regenerate token."
+            });
+        }
+    
+        user.password = password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordTokenExpire = undefined;
+        await user.save();
+
+    
+        return res.status(200)
+        .json({
+            success: true,
+            message: "Password reset successfully"
         });
-    }   
+    } catch (error) {
+        return res.json({
+            error: error.message,
+            success: false,
+            message: `Some Error in Updating the Password`,
+        })
+    }
 
 }
-export {sendOTP, singup, login, changePassword};
+export {sendOTP, singup, login, changePassword, resetPasswordToken, resetPassword};

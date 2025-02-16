@@ -16,7 +16,7 @@ function Navbar(){
     const {totalItems} = useSelector(state => state.cart)
     const [catalogLinks, setCatalogLinks] = useState([])
 
-    console.log(token , user, totalItems)
+    // console.log(token , user, totalItems)
 
     async function fetchCatalogLinks(){
         try {

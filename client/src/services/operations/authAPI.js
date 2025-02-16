@@ -5,7 +5,7 @@ import { setLoading, setToken } from "../../slices/authSlice";
 import { setUser } from "../../slices/profileSlice";
 import { apiConnector } from "../apiConnector";
 
-const {SENDOTP_API, SIGNUP_API, LOGIN_API, CHANGEPASSWORD_API} = authEndpoints
+const {SENDOTP_API, SIGNUP_API, LOGIN_API, CHANGEPASSWORD_API, RESETPASSTOKEN_API, RESETPASSWORD_API} = authEndpoints
 
 export const sendOtp = async(email, navigate, dispatch) => {
 
@@ -42,8 +42,10 @@ export const login = async(email, password, navigate, dispatch) =>{
 
         if(!response.data.success){
             console.log("LOGIN FAILED.............")
+            return;
         }
         toast.success("Login Successful")
+
         dispatch(setUser({...response.data.data.user}));
         dispatch(setToken(response.data.data.token));
         localStorage.setItem("token", JSON.stringify(response.data.data.token));
@@ -58,3 +60,46 @@ export const login = async(email, password, navigate, dispatch) =>{
     dispatch(setLoading(false));
 }
 
+export const resertPasswordToken = async(email, setEmailSent, navigate, dispatch) =>{
+    const toastId = toast.loading("Loading...");
+    dispatch(setLoading(true));
+    try {
+        const response = await apiConnector("POST", RESETPASSTOKEN_API, {email});
+        console.log("RESETPASSTOKEN RESPONSE............", response)
+
+        if (!response.data.success) {
+            console.log("RESET PASSWORD TOKEN FAILED.............")
+            return;
+          }
+
+        toast.success("Reset Email Sent")
+        setEmailSent(true);
+    } catch (error) {
+        console.log("RESETPASSTOKEN ERROR............", error)
+        toast.error("Failed To Send Reset Email")
+    }
+    toast.dismiss(toastId);
+    dispatch(setLoading(false));
+}
+
+export const resetPassword = async(password, token, navigate, dispatch) => {
+    const toastId = toast.loading("Loading...");
+    dispatch(setLoading(true));
+    try {
+        const response = await apiConnector("POST", RESETPASSWORD_API, {password, token});
+        console.log("RESET PASSWORD RESPONSE............", response)
+
+        if (!response.data.success) {
+            console.log("RESET PASSWORD FAILED.............");
+            return;
+        }
+
+        toast.success("Password Reset Successfully")
+        navigate("/login")
+    } catch (error) {
+        console.log("RESETPASSWORD ERROR............", error)
+      toast.error("Failed To Reset Password")
+    }
+    toast.dismiss(toastId);
+    dispatch(setLoading(false));
+}
