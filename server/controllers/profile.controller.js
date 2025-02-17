@@ -14,8 +14,8 @@ const updateProfile = async (req, res) => {
             });
         }
 
-        const user = await User.findById(userId);
-        const profile = await Profile.findById(user.profileDetails);
+        const presentUser = await User.findById(userId);
+        const profile = await Profile.findById(presentUser.profileDetails);
 
         profile.gender = gender ? gender : profile.gender;
         profile.dateOfBirth = dateOfBirth ? dateOfBirth : profile.dateOfBirth;
@@ -24,10 +24,12 @@ const updateProfile = async (req, res) => {
 
         await profile.save();
 
+        const user = await User.findById(userId).populate("profileDetails");
+
         return res.status(200).json({
             success: true,
             message: "Profile updated successfully",
-            data: profile
+            data: user
         });
 
     } catch (error) {

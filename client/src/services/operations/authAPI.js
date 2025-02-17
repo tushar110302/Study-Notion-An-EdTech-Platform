@@ -46,7 +46,7 @@ export const login = async(email, password, navigate, dispatch) =>{
         }
         toast.success("Login Successful")
 
-        dispatch(setUser({...response.data.data.user}));
+        dispatch(setUser(response.data.data.user));
         dispatch(setToken(response.data.data.token));
         localStorage.setItem("token", JSON.stringify(response.data.data.token));
         localStorage.setItem("user", JSON.stringify(response.data.data.user));

@@ -7,6 +7,7 @@ export default function IconBtn({
     customClasses,
     type,
   }) {
+
     return (
       <button
         disabled={disabled}

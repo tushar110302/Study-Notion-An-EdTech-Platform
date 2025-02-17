@@ -14,6 +14,7 @@ import OpenRoute from "./components/Auth/OpenRoute"
 import Profile from "./components/Dashboard/Profile"
 import Course from "./pages/Course"
 import Error from "./pages/Error"
+import { Settings } from "./components/Dashboard/Settings"
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
           }
         >
           <Route path="my-profile"  element={<Profile/>}/>
+          <Route path="settings" element={<Settings />} />
           <Route path="enrolled-courses"  element={<Course/>}/>
 
         </Route>
