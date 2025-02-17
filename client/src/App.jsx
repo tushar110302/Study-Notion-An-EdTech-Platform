@@ -7,6 +7,12 @@ import ForgotPassword from "./pages/ForgotPassword"
 import UpdatePassword from "./pages/UpdatePassword"
 import VerifyEmail from "./pages/VerifyEmail"
 import About from "./pages/About"
+import Contact from "./pages/Contact"
+import Dashboard from "./pages/Dashboard"
+import ProtectedRoute from "./components/Auth/ProtectedRoute"
+import OpenRoute from "./components/Auth/OpenRoute"
+import Profile from "./components/Dashboard/Profile"
+import Course from "./pages/Course"
 
 function App() {
 
@@ -16,23 +22,36 @@ function App() {
       <Routes>
         <Route path="" element={<Home/>} />
         <Route path="/about" element={<About/>} />
+        <Route path="/contact" element={<Contact/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/update-password/:id" 
           element={
-            // <OpenRoute>
+            <OpenRoute>
               <UpdatePassword />
-            // </OpenRoute>
+             </OpenRoute>
           }
         />
-        <Route path="verify-email"
+        <Route path="/verify-email"
           element={
-            // <OpenRoute>
+            <OpenRoute>
               <VerifyEmail />
-            // </OpenRoute>
+            </OpenRoute>
           }
         />
+        <Route path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="my-profile"  element={<Profile/>}/>
+          <Route path="enrolled-courses"  element={<Course/>}/>
+
+        </Route>
+
       </Routes>
      
     </div>

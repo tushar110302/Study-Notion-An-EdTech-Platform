@@ -3,6 +3,7 @@ import { authEndpoints } from "../api"
 import { setLoading, setToken } from "../../slices/authSlice";
 import { setUser } from "../../slices/profileSlice";
 import { apiConnector } from "../apiConnector";
+import { resetCart } from "../../slices/cartSlice";
 
 const {SENDOTP_API, SIGNUP_API, LOGIN_API, CHANGEPASSWORD_API, RESETPASSTOKEN_API, RESETPASSWORD_API} = authEndpoints
 
@@ -58,6 +59,16 @@ export const login = async(email, password, navigate, dispatch) =>{
     toast.dismiss(toastId);
     dispatch(setLoading(false));
 }
+
+export const logout = async(navigate, dispatch) => {
+    dispatch(setToken(null))
+    dispatch(setUser(null))
+    dispatch(resetCart())
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    toast.success("Logged Out")
+    navigate("/")
+  }
 
 export const signup = async(firstName, lastName, email, password, otp, accountType, navigate, dispatch) => {
     
