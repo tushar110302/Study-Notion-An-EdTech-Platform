@@ -49,6 +49,7 @@ export const login = async(email, password, navigate, dispatch) =>{
         dispatch(setUser({...response.data.data.user}));
         dispatch(setToken(response.data.data.token));
         localStorage.setItem("token", JSON.stringify(response.data.data.token));
+        localStorage.setItem("user", JSON.stringify(response.data.data.user));
 
         navigate("/dashboard/my-profile")
 

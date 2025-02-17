@@ -18,16 +18,19 @@ function LearnLanguageSection() {
             <div className='flex flex-col lg:flex-row items-center justify-center mt-8 lg:mt-0'>
                 <img
                     src={Know_your_progress}
+                    loading='lazy'
                     alt=""
                     className="object-contain  lg:-mr-32 "
                 />
                 <img
                     src={Compare_with_others}
+                    loading='lazy'
                     alt=""
                     className="object-contain lg:-mb-10 lg:-mt-0 -mt-12"
                 />
                 <img
                     src={Plan_your_lessons}
+                    loading='lazy'
                     alt=""
                     className="object-contain  lg:-ml-36 lg:-mt-5 -mt-16"
                 />

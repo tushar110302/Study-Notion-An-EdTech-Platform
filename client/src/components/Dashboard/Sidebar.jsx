@@ -5,19 +5,21 @@ import SidebarLink from './SidebarLink'
 import ConfirmationModal from '../ConfirmationModal'
 import { logout } from '../../services/operations/authAPI'
 import { VscSignOut } from 'react-icons/vsc'
+import { useNavigate } from 'react-router-dom'
 
 function Sidebar() {
-    const {loading: authLoading} = useSelector(state => state.auth)
-    const {loading: profileLoading, user} = useSelector(state => state.profile)
-    const [confirmationModal, setConfirmationModal] = useState(null)
-    const dispatch = useDispatch()
+    const {loading: authLoading} = useSelector(state => state.auth);
+    const {loading: profileLoading, user} = useSelector(state => state.profile);
+    const [confirmationModal, setConfirmationModal] = useState(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     if(authLoading || profileLoading ){
         return (
             <div className='spinner m-auto'></div>
         )
     }
-console.log(user)
+
   return (
     <div className='flex flex-col min-w-[222px] border-r-2 border-r-richblack-700 py-10 bg-richblack-800'>
         {

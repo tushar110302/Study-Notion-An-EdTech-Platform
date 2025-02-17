@@ -9,6 +9,7 @@ function InstructorSection() {
         <div className='flex flex-col lg:flex-row gap-20 items-center my-10'>
             <div className="lg:w-[50%]">
                 <img
+                loading='lazy'
                 src={Instructor}
                 alt=""
                 className="shadow-white shadow-[-20px_-20px_0_0]"

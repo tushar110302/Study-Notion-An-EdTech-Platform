@@ -18,9 +18,9 @@ function About() {
             </h1>
             <p className='tracking-wide text-base font-medium text-richblack-300 lg:w-[65%]'>Studynotion is at the forefront of driving innovation in online education. We're passionate about creating a brighter future by offering cutting-edge courses, leveraging emerging technologies, and nurturing a vibrant learning community.</p>
             <div className='grid grid-cols-3  gap-5 lg:gap-10 mt-10'>
-                <img src={banner1} alt=""  />
-                <img src={banner2} alt="" />
-                 <img src={banner3} alt="" />  
+                <img loading='lazy' src={banner1} alt=""  />
+                <img loading='lazy' src={banner2} alt="" />
+                 <img loading='lazy' src={banner3} alt="" />  
             </div>
         </div>
 
@@ -54,7 +54,7 @@ function About() {
                 </p>
             </div>
             <div className='lg:w-[40%]'>
-                <img src={foundingImage} className="shadow-[0_0_20px_0] shadow-[#FC6767]"/>
+                <img src={foundingImage} loading='lazy' className="shadow-[0_0_20px_0] shadow-[#FC6767]"/>
             </div>
         </div>
 

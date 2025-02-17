@@ -144,20 +144,21 @@ const login = async (req, res) => {
                 message: "All fields are required"
             });
         }   
-        const user = await User.findOne({email});
-        if(!user){
+        const presentUser = await User.findOne({email});
+        if(!presentUser){
             return res.status(401).json({
                 success: false,
                 message: "User not Registered"
             });
         }   
-        const check = await bcrypt.compare(password, user.password);
+        const check = await bcrypt.compare(password, presentUser.password);
         if(!check){
             return res.status(400).json({
                 success: false,
                 message: "Invalid password"
             });
         }
+        const user = await User.findById(presentUser._id).select("-password").populate("profileDetails");
         const token = generateToken(user);
 
         const options = {

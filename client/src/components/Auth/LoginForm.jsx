@@ -39,11 +39,12 @@ function LoginForm() {
             <span onClick={() => setShowPassword(prev => !prev)} className='absolute right-3 top-[38px] cursor-pointer'>
                 {showPassword ?  <AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF' />: <AiOutlineEye fontSize={24} fill='#AFB2BF'/>}
             </span>
-            <Link to={"/forgot-password"}>
-                <p className='text-xs mt-1 text-blue-100 max-w-max ml-auto'>
+            <p className='text-xs mt-1 text-blue-100 max-w-max ml-auto'>
+                <Link to={"/forgot-password"}>
                     Forgot Password
-                </p>
-            </Link>
+                </Link>
+            </p>
+            
             
         </label>
 

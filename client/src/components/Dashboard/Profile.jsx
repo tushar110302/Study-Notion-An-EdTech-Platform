@@ -51,12 +51,12 @@ export default function Profile() {
         </div>
         <p
           className={`${
-            user?.additionalDetails?.about
+            user?.profileDetails?.about
               ? "text-richblack-5"
               : "text-richblack-400"
           } text-sm font-medium`}
         >
-          {user?.additionalDetails?.about ?? "Write Something About Yourself"}
+          {user?.profileDetails?.about ?? "Write Something About Yourself"}
         </p>
       </div>
       <div className="my-10 flex flex-col gap-y-10 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12">
@@ -90,7 +90,7 @@ export default function Profile() {
             <div>
               <p className="mb-2 text-sm text-richblack-600">Gender</p>
               <p className="text-sm font-medium text-richblack-5">
-                {user?.additionalDetails?.gender ?? "Add Gender"}
+                {user?.profileDetails?.gender ?? "Add Gender"}
               </p>
             </div>
           </div>
@@ -104,14 +104,14 @@ export default function Profile() {
             <div>
               <p className="mb-2 text-sm text-richblack-600">Phone Number</p>
               <p className="text-sm font-medium text-richblack-5">
-                {user?.additionalDetails?.contactNumber ?? "Add Contact Number"}
+                {user?.profileDetails?.phone ?? "Add Contact Number"}
               </p>
             </div>
             <div>
               <p className="mb-2 text-sm text-richblack-600">Date Of Birth</p>
               <p className="text-sm font-medium text-richblack-5">
-                {formattedDate(user?.additionalDetails?.dateOfBirth) ??
-                  "Add Date Of Birth"}
+                {!user?.profileDetails?.dateOfBirth ? "Add Date Of Birth" : formattedDate(user?.profileDetails?.dateOfBirth)}
+
               </p>
             </div>
           </div>

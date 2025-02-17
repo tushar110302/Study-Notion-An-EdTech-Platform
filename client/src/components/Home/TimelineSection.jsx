@@ -39,7 +39,7 @@ function TimelineSection() {
                     <div className='flex flex-col lg:gap-3' key={index}>
                         <div className="flex gap-6" >
                             <div className="w-[52px] h-[52px] bg-white rounded-full flex justify-center items-center shadow-[#00000012] shadow-[0_0_62px_0]">
-                                <img src={item.Logo} alt="" />
+                                <img src={item.Logo} loading='lazy' alt="" />
                             </div>
                             <div>
                                 <h2 className="font-semibold text-[18px]">{item.Heading}</h2>
@@ -76,6 +76,7 @@ function TimelineSection() {
                 </div>
                 <img
                     src={TimeLineImage}
+                    loading='lazy'
                     alt="timelineImage"
                     className="shadow-white shadow-[20px_20px_0px_0px] object-cover h-[400px] lg:h-fit"
                 />

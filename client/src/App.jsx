@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/Auth/ProtectedRoute"
 import OpenRoute from "./components/Auth/OpenRoute"
 import Profile from "./components/Dashboard/Profile"
 import Course from "./pages/Course"
+import Error from "./pages/Error"
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
 
         </Route>
 
+        <Route path="*" element={<Error />} />
       </Routes>
      
     </div>
