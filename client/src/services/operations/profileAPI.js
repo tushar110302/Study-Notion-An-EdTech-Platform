@@ -23,11 +23,10 @@ export const getUserDetails = async(token, navigate, dispatch) => {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-    //   const userImage = response.data.data.image
-    //     ? response.data.data.image
-    //     : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.data.firstName} ${response.data.data.lastName}`
+
       dispatch(setUser(response.data.data))
       localStorage.setItem("user", JSON.stringify(response.data.data));
+      
     } catch (error) {
       await logout(navigate, dispatch)
       console.log("GET_USER_DETAILS API ERROR............", error)
@@ -54,6 +53,7 @@ export const getUserEnrolledCourses = async (token) => {
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
+    console.log(response.data.data)
     result = response.data.data
   } catch (error) {
     console.log("GET_USER_ENROLLED_COURSES_API API ERROR............", error)

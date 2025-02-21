@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom"
 
 import { updateProfile } from "../../../services/operations/SettingsAPI"
 import IconBtn from "../../IconBtn"
-import UtilityButton from "../../Home/UtilityButton"
 
 const genders = ["Male", "Female", "Non-Binary", "Prefer not to say", "Other"]
 
@@ -20,14 +19,6 @@ export default function EditProfile() {
     formState: { errors },
   } = useForm()
 
-  // const submitProfileForm = async (data) => {
-  //   console.log("Form Data - ", data)
-  //   try {
-  //     await updateProfile(token, data, dispatch)
-  //   } catch (error) {
-  //     console.log("ERROR MESSAGE - ", error.message)
-  //   }
-  // }
   async function onSubmit(data){
     console.log(data)
     try {

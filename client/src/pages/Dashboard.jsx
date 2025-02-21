@@ -12,6 +12,7 @@ function Dashboard() {
             <div className='spinner mx-auto'></div>
         )
     }
+    console.log(authLoading, profileLoading)
   return (
     <div className="relative flex min-h-[calc(100vh-3.5rem)]">
         <Sidebar />

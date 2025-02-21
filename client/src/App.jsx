@@ -12,9 +12,10 @@ import Dashboard from "./pages/Dashboard"
 import ProtectedRoute from "./components/Auth/ProtectedRoute"
 import OpenRoute from "./components/Auth/OpenRoute"
 import Profile from "./components/Dashboard/Profile"
-import Course from "./pages/Course"
 import Error from "./pages/Error"
 import { Settings } from "./components/Dashboard/Settings"
+import EnrolledCourse from "./components/Dashboard/EnrolledCourse"
+import Cart from "./components/Dashboard/Cart"
 
 function App() {
 
@@ -51,7 +52,8 @@ function App() {
         >
           <Route path="my-profile"  element={<Profile/>}/>
           <Route path="settings" element={<Settings />} />
-          <Route path="enrolled-courses"  element={<Course/>}/>
+          <Route path="enrolled-courses"  element={<EnrolledCourse/>}/>
+          <Route path="cart"  element={<Cart/>}/>
 
         </Route>
 

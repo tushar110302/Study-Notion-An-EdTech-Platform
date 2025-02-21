@@ -56,7 +56,7 @@ export default function Profile() {
               : "text-richblack-400"
           } text-sm font-medium`}
         >
-          {user?.profileDetails?.about ?? "Write Something About Yourself"}
+          {!user?.profileDetails.about ? "Write Something About Yourself" : user?.profileDetails.about}
         </p>
       </div>
       <div className="my-10 flex flex-col gap-y-10 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12">
@@ -90,7 +90,7 @@ export default function Profile() {
             <div>
               <p className="mb-2 text-sm text-richblack-600">Gender</p>
               <p className="text-sm font-medium text-richblack-5">
-                {user?.profileDetails?.gender ?? "Add Gender"}
+                {!user?.profileDetails?.gender ? "Add Gender" : user?.profileDetails?.gender}
               </p>
             </div>
           </div>
