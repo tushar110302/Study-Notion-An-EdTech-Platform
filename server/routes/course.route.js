@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {createCourse, getAllCourses, getCourseById } from "../controllers/course.controller.js"
+import {createCourse, editCourse, getAllCourses, getCourseById } from "../controllers/course.controller.js"
 import { createCategory, getAllCategories, getCategoryPageDetails} from "../controllers/category.controller.js";   
 import {createSection, updateSection, deleteSection} from "../controllers/section.controller.js"
 import {createSubSection, updateSubSection, deleteSubSection} from "../controllers/subSection.controller.js"
@@ -15,6 +15,7 @@ const router = Router();
 
 // Courses can Only be Created by Instructors
 router.route('/createCourse').post(verifyJWT, isInstructor, upload.single("thumbnail"), createCourse)
+router.route("/editCourse").post(verifyJWT, isInstructor, upload.single("thumbnail"), editCourse)
 //Add a Section to a Course
 router.route('/addSection').post(verifyJWT, isInstructor, createSection)
 // Update a Section

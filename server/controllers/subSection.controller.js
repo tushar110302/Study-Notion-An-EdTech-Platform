@@ -54,10 +54,10 @@ const createSubSection = async (req, res) => {
 
 const updateSubSection = async (req, res) => {
     try {
-        const {title, description, subSectionId } = req.body;
+        const {title, description, subSectionId, sectionId } = req.body;
         // CHECK IF ALL FIELDS ARE PROVIDED AND THINK WHAT TO DO IF ALL FIELDS ARE NOT PROVIDED
         const subSection = await SubSection.findById(subSectionId)
-  
+        
         if (!subSection) {
             return res.status(404).json({
             success: false,
@@ -76,11 +76,13 @@ const updateSubSection = async (req, res) => {
         }
     
         await subSection.save()
+
+        const section = await Section.findById(sectionId).populate("subSections")
     
         return res.status(200).json({
             success: true,
             message: "SubSection is updated",
-            data: subSection
+            data: section
         });
     } catch (error) {
         return res.status(500).json({
@@ -103,9 +105,12 @@ const deleteSubSection = async (req, res) => {
         // )
         await SubSection.findByIdAndDelete(subSectionId);
 
+        const section = await Section.findById(sectionId).populate("subSections")
+
         return res.status(200).json({
             success: true,
-            message: "SubSection is deleted"
+            message: "SubSection is deleted",
+            data: section
         });
     } catch (error) {
         return res.status(500).json({

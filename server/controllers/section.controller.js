@@ -44,7 +44,7 @@ const createSection = async (req, res) => {
 
 const updateSection = async (req, res) => {
     try {
-        const {sectionName, sectionId} = req.body;
+        const {sectionName, sectionId, courseId} = req.body;
         if(!sectionName || !sectionId){
             return res.status(400).json({
                 success: false,
@@ -53,10 +53,17 @@ const updateSection = async (req, res) => {
         }
         const updatedSection = await Section.findByIdAndUpdate(sectionId,{sectionName}, {new: true});
 
+        const course = await Course.findById(courseId)
+        .populate({
+            path: "sections",
+            populate: {
+                path: "subSections"},
+        });
+        
         return res.status(200).json({
             success: true,
             message: "Section is updated",
-            data: updatedSection
+            data: course
         });
 
     } catch (error) {
@@ -85,9 +92,17 @@ const deleteSection = async (req, res) => {
                 $in: section.subSections
             }
         })
+        const updatedCourse = await Course.findById(courseId)
+        .populate("category", "name")
+        .populate({
+            path: "sections",
+            populate: { path: "subSections" }
+        });
+
         return res.status(200).json({
             success: true,
-            message: "Section is deleted Successfully "
+            message: "Section is deleted Successfully ",
+            data: updatedCourse
         });
         
 
