@@ -2,6 +2,8 @@ import {Course} from '../models/course.model.js';
 import {Category} from '../models/category.model.js';
 import {User} from '../models/user.model.js';
 import { uploadOnCloudinary } from '../utils/cloudinary.js';
+import { convertSecondsToDuration } from '../utils/secToDuration.js';
+import { CourseProgress } from '../models/courseProgress.model.js';
 
 const createCourse = async (req, res) => {
  try {
@@ -14,10 +16,10 @@ const createCourse = async (req, res) => {
             message: "All fields are required"
         });
     }
-    const tags = JSON.parse(_tag)
+    const tags = JSON.parse(tag)
     if (!status || status === undefined) {
         status = "Draft"
-      }
+    }
 
     const instructorId = req.user._id;
 
@@ -142,10 +144,99 @@ const editCourse = async (req, res) => {
         error: error.message,
       })
     }
-  }
+}
+const getFullCourseDetails = async (req, res) => {
+    try {
+      const { courseId } = req.body
+      const userId = req.user._id
+      const courseDetails = await Course.findOne({ _id: courseId})
+        .populate({
+          path: "instructor",
+          populate: {
+            path: "profileDetails",
+          },
+        })
+        // .populate("category")
+        .populate("ratingAndReviews")
+        .populate({
+          path: "sections",
+          populate: {
+            path: "subSections",
+          },
+        })
+        .exec()
+  
+      let courseProgressCount = await CourseProgress.findOne({
+        courseID: courseId,
+        userId: userId,
+      })
+  
+      console.log("courseProgressCount : ", courseProgressCount)
+  
+      if (!courseDetails) {
+        return res.status(400).json({
+          success: false,
+          message: `Could not find course with id: ${courseId}`,
+        })
+      }
+  
+      // if (courseDetails.status === "Draft") {
+      //   return res.status(403).json({
+      //     success: false,
+      //     message: `Accessing a draft course is forbidden`,
+      //   });
+      // }
+  
+      let totalDurationInSeconds = 0
+      courseDetails.sections.forEach((content) => {
+        content.subSections.forEach((subSection) => {
+          const timeDurationInSeconds = parseInt(subSection.duration)
+          totalDurationInSeconds += timeDurationInSeconds
+        })
+      })
+  
+      const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
+  
+      return res.status(200).json({
+        success: true,
+        data: {
+          courseDetails,
+          totalDuration,
+          completedVideos: courseProgressCount?.completedVideos
+            ? courseProgressCount?.completedVideos
+            : [],
+        },
+      })
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      })
+    }
+}
+const getInstructorCourses = async (req, res) => {
+    try {
+
+      const instructorId = req.user._id
+      const instructorCourses = await Course.find({instructor: instructorId,}).sort({ createdAt: -1 })
+
+      res.status(200).json({
+        success: true,
+        data: instructorCourses,
+      })
+
+    } 
+    catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Failed to retrieve instructor courses",
+        error: error.message,
+      })
+    }
+}
 const getAllCourses = async (req, res) => {
     try {
-        const allCourses = await Course.find({}, {
+        const allCourses = await Course.find({ status: "Published" }, {
             courseName: true,
             price: true,
             instructor: true,
@@ -214,4 +305,4 @@ const getCourseById = async (req, res) => {
         });
     }
 }
-export {createCourse, editCourse, getAllCourses, getCourseById};
+export {createCourse, editCourse, getAllCourses, getFullCourseDetails, getInstructorCourses, getCourseById};

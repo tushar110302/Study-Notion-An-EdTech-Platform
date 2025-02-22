@@ -21,7 +21,7 @@ function Sidebar() {
     }
 
   return (
-    <div className='flex flex-col min-w-[222px] border-r-2 border-r-richblack-700 py-10 bg-richblack-800'>
+    <div className='hidden md:flex flex-col min-w-[222px] border-r-2 border-r-richblack-700 py-10 bg-richblack-800'>
         {
            sideBarLinks.map((item) => (
                 item.type && item.type !== user.accountType ? null 

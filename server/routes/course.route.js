@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {createCourse, editCourse, getAllCourses, getCourseById } from "../controllers/course.controller.js"
+import {createCourse, editCourse, getAllCourses, getCourseById, getFullCourseDetails, getInstructorCourses } from "../controllers/course.controller.js"
 import { createCategory, getAllCategories, getCategoryPageDetails} from "../controllers/category.controller.js";   
 import {createSection, updateSection, deleteSection} from "../controllers/section.controller.js"
 import {createSubSection, updateSubSection, deleteSubSection} from "../controllers/subSection.controller.js"
@@ -32,6 +32,9 @@ router.route('/addSubSection').post(verifyJWT, isInstructor, upload.single("vide
 router.route('/getAllCourses').get(getAllCourses)
 // Get Details for a Specific Courses
 router.route('/getCourseDetails').get( getCourseById)
+router.route("/getFullCourseDetails").post(verifyJWT, getFullCourseDetails)
+
+router.route("/getInstructorCourses").get(verifyJWT, isInstructor, getInstructorCourses)
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)

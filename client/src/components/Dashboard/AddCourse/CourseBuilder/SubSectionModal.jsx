@@ -33,41 +33,38 @@ export default function SubSectionModal({ modalData, setModalData, add = false, 
       currentValues.lectureDesc !== modalData.description ||
       currentValues.lectureVideo !== modalData.videoUrl
     ) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
   // handle the editing of subsection
   const handleEditSubsection = async () => {
     const currentValues = getValues();
-    // console.log("changes after editing form values:", currentValues)
     const formData = new FormData();
-    // console.log("Values After Editing form values:", currentValues)
-    formData.append("sectionId", modalData.sectionId)
-    formData.append("subSectionId", modalData._id)
+
+    formData.append("sectionId", modalData.sectionId);
+    formData.append("subSectionId", modalData._id);
     if (currentValues.lectureTitle !== modalData.title) {
-      formData.append("title", currentValues.lectureTitle)
+      formData.append("title", currentValues.lectureTitle);
     }
     if (currentValues.lectureDesc !== modalData.description) {
-      formData.append("description", currentValues.lectureDesc)
+      formData.append("description", currentValues.lectureDesc);
     }
     if (currentValues.lectureVideo !== modalData.videoUrl) {
-      formData.append("video", currentValues.lectureVideo)
+      formData.append("video", currentValues.lectureVideo);
     }
-    setLoading(true)
-    const result = await updateSubSection(formData, token)
+    setLoading(true);
+    const result = await updateSubSection(formData, token);
     if (result) {
-      // console.log("result", result)
-      // update the structure of course
-      const updatedSections = course.sections.map((section) =>
-        section._id === modalData.sectionId ? result : section
-      )
-      const updatedCourse = { ...course, sections: updatedSections }
-      dispatch(setCourse(updatedCourse))
+  
+      const updatedSections = course.sections.map((section) => 
+        section._id === modalData.sectionId ? result : section );
+      const updatedCourse = { ...course, sections: updatedSections };
+      dispatch(setCourse(updatedCourse));
     }
-    setModalData(null)
-    setLoading(false)
+    setModalData(null);
+    setLoading(false);
   }
 
   const onSubmit = async (data) => {
@@ -83,23 +80,22 @@ export default function SubSectionModal({ modalData, setModalData, add = false, 
       return;
     }
 
-    const formData = new FormData()
-    formData.append("sectionId", modalData)
-    formData.append("title", data.lectureTitle)
-    formData.append("description", data.lectureDesc)
-    formData.append("video", data.lectureVideo)
-    setLoading(true)
-    const result = await createSubSection(formData, token)
+    const formData = new FormData();
+    formData.append("sectionId", modalData);
+    formData.append("title", data.lectureTitle);
+    formData.append("description", data.lectureDesc);
+    formData.append("video", data.lectureVideo);
+    setLoading(true);
+    const result = await createSubSection(formData, token);
     if (result) {
       // update the structure of course
       const updatedSections = course.sections.map((section) =>
-        section._id === modalData ? result : section
-      )
+        section._id === modalData ? result : section);
       const updatedCourse = { ...course, sections: updatedSections }
-      dispatch(setCourse(updatedCourse))
+      dispatch(setCourse(updatedCourse));
     }
-    setModalData(null)
-    setLoading(false)
+    setModalData(null);
+    setLoading(false);
   }
 
   return (

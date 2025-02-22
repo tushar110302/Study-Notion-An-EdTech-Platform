@@ -5,13 +5,14 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { setSignupData} from "../../slices/authSlice";
 import { sendOtp } from "../../services/operations/authAPI"
+import { ACCOUNT_TYPE } from '../../utils/constants';
 
 function SignUpForm() {
 
     const [formData, setFormData] = useState({firstName: "", lastName: "", email:"", password: "", confirmPassword: ""});
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [accountType, setAccountType] = useState("Student");
+    const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -35,20 +36,20 @@ function SignUpForm() {
         await sendOtp(formData.email, navigate, dispatch);
 
         setFormData({firstName: "", lastName: "", email:"", password: "", confirmPassword: ""});
-        setAccountType("student");
+        setAccountType(ACCOUNT_TYPE.STUDENT);
     }
 
   return (
     <div>
         <div className='mx-auto md:mx-0 flex bg-richblack-800 p-1 gap-x-1 my-6 rounded-full max-w-max'>
-            <button className={`${accountType === "Student" ? "bg-richblack-900 text-richblack-5"
+            <button className={`${accountType === ACCOUNT_TYPE.STUDENT ? "bg-richblack-900 text-richblack-5"
             : "bg-transparent text-richblack-200"} py-2 px-5 rounded-full transition-all duration-200`}
-            onClick={() => setAccountType('Student')}>
+            onClick={() => setAccountType(ACCOUNT_TYPE.STUDENT)}>
                 Student
             </button>
-            <button className={`${accountType === "Instructor" ? "bg-richblack-900 text-richblack-5"
+            <button className={`${accountType === ACCOUNT_TYPE.INSTRUCTOR ? "bg-richblack-900 text-richblack-5"
             : "bg-transparent text-richblack-200"} py-2 px-5 rounded-full transition-all duration-200`}
-            onClick={() => setAccountType('Instructor')}>
+            onClick={() => setAccountType(ACCOUNT_TYPE.INSTRUCTOR)}>
                 Instructor
             </button>
         </div>
