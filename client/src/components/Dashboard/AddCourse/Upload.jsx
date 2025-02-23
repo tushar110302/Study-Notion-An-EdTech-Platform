@@ -2,25 +2,12 @@ import { useEffect, useRef, useState } from "react"
 import { useDropzone } from "react-dropzone"
 import { FiUploadCloud } from "react-icons/fi"
 import { useSelector } from "react-redux"
-
-// import "video-react/dist/video-react.css"
 import ReactPlayer from "react-player"
 
-export default function Upload({
-  name,
-  label,
-  register,
-  setValue,
-  errors,
-  video = false,
-  viewData = null,
-  editData = null,
-}) {
+export default function Upload({name, label, register, setValue, errors, video = false, viewData = null, editData = null}) {
   const { course } = useSelector((state) => state.course)
   const [selectedFile, setSelectedFile] = useState(null)
-  const [previewSource, setPreviewSource] = useState(
-    viewData ? viewData : editData ? editData : ""
-  )
+  const [previewSource, setPreviewSource] = useState(viewData ? viewData : editData ? editData : "")
   const inputRef = useRef(null)
 
   const onDrop = (acceptedFiles) => {
@@ -47,7 +34,6 @@ export default function Upload({
   })
 
   const previewFile = (file) => {
-    // console.log(file)
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onloadend = () => {
@@ -55,15 +41,12 @@ export default function Upload({
     }
   }
 
-
   useEffect(() => {
     register(name, { required: true })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [register])
 
   useEffect(() => {
     setValue(name, selectedFile)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFile, setValue])
 
   return (
