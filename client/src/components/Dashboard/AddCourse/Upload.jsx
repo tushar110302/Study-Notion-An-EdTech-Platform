@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 import { useDropzone } from "react-dropzone"
 import { FiUploadCloud } from "react-icons/fi"
-import { useSelector } from "react-redux"
 import ReactPlayer from "react-player"
 
 export default function Upload({name, label, register, setValue, errors, video = false, viewData = null, editData = null}) {
-  const { course } = useSelector((state) => state.course)
+
   const [selectedFile, setSelectedFile] = useState(null)
   const [previewSource, setPreviewSource] = useState(viewData ? viewData : editData ? editData : "")
   const inputRef = useRef(null)
@@ -55,9 +54,7 @@ export default function Upload({name, label, register, setValue, errors, video =
         {label} {!viewData && <sup className="text-pink-200">*</sup>}
       </label>
       <div
-        className={`${
-          isDragActive ? "bg-richblack-600" : "bg-richblack-700"
-        } flex min-h-[250px] cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500`}
+        className={`${isDragActive ? "bg-richblack-600" : "bg-richblack-700"} flex min-h-[250px] cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500`}
       >
         {previewSource ? (
           <div className="flex w-full flex-col p-6">
