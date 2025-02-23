@@ -36,17 +36,17 @@ export default function CoursesTable({ courses, setCourses }) {
     <>
       <Table className="rounded-xl border border-richblack-800 text-richblack-100">
         <Thead>
-          <Tr className="flex gap-x-10 rounded-t-md border-b  border-b-richblack-800 px-6 py-2">
-            <Th className="flex flex-1 text-left text-sm font-medium uppercase text-richblack-100" >
+          <Tr className="flex gap-x-10 rounded-t-md border-b border-b-richblack-800 px-6 py-2">
+            <Th className="flex flex-1 text-left text-sm font-medium uppercase" >
               Courses
             </Th>
             <Th className="text-left text-sm font-medium uppercase ">
               Duration
             </Th>
-            <Th className="text-left text-sm font-medium uppercase text-richblack-100">
+            <Th className="text-left text-sm font-medium uppercase ">
               Price
             </Th>
-            <Th className="text-left text-sm font-medium uppercase text-richblack-100">
+            <Th className="text-left text-sm font-medium uppercase">
               Actions
             </Th>
           </Tr>
