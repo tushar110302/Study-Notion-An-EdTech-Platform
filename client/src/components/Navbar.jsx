@@ -5,8 +5,7 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import ProfileDropDown from "./Auth/ProfileDropDown"
-import { apiConnector } from "../services/apiConnector"
-import { categories } from "../services/api"
+import { fetchCourseCategories } from "../services/operations/courseDetailsAPI";
 
 function Navbar(){
 
@@ -19,8 +18,8 @@ function Navbar(){
 
     async function fetchCatalogLinks(){
         try {
-            const response = await apiConnector("GET",categories.CATEGORY_API )
-            setCatalogLinks(response.data.data);
+            const res = await fetchCourseCategories();
+            setCatalogLinks(res);
 
         } catch (error) {
             console.log("COULD NOT FETCH CATALOG LINKS")

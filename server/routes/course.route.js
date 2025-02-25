@@ -6,7 +6,7 @@ import {createSubSection, updateSubSection, deleteSubSection} from "../controlle
 import {createRating, getAllRatingAndReviews, getAverageRating} from "../controllers/ratingAndReview.controller.js"
 import { isAdmin, verifyJWT , isStudent, isInstructor} from "../middlewares/auth.js";
 import { upload } from '../middlewares/multer.js';
-import { updateCourseProgress } from "../controllers/courseProgress.js";
+import { updateCourseProgress } from "../controllers/courseProgress.controller.js";
 
 const router = Router();
 
@@ -46,7 +46,7 @@ router.route("/updateCourseProgress").post(verifyJWT, isStudent, updateCoursePro
 // Category can Only be Created by Admin
 router.route("/createCategory").post(verifyJWT, isAdmin, createCategory)
 router.route("/showAllCategories").get(getAllCategories)
-router.route("/getCategoryPageDetails").get(getCategoryPageDetails)
+router.route("/getCategoryPageDetails").post(getCategoryPageDetails)
 
 // ********************************************************************************************************
 //                                      Rating and Review

@@ -1,5 +1,5 @@
-const { SubSection } = require("../models/subSection.model")
-const { CourseProgress } = require("../models/courseProgress.model")
+import {SubSection} from "../models/subSection.model.js";
+import {CourseProgress} from "../models/courseProgress.model.js"
 
 const updateCourseProgress = async (req, res) => {
   const { courseId, subsectionId } = req.body

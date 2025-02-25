@@ -8,7 +8,7 @@ import "swiper/css/pagination"
 
 import { FaStar } from "react-icons/fa"
 
-import { Autoplay, FreeMode, Pagination } from "swiper"
+import { Autoplay, FreeMode, Pagination } from "swiper/modules"
 
 // Get apiFunction and the endpoint
 import { apiConnector } from "../services/apiConnector"
