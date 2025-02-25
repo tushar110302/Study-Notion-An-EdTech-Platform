@@ -288,6 +288,11 @@ const deleteCourse = async (req, res) => {
       await Section.findByIdAndDelete(sectionId)
     }
 
+    // Remove the course from the category
+    const categoryId = course.category;
+    await Category.findByIdAndUpdate(categoryId, {
+      $pull: {courses: courseId}
+    })
     // Delete the course
     await Course.findByIdAndDelete(courseId)
 

@@ -1,5 +1,9 @@
 import { Category } from "../models/category.model.js";
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max)
+}
+
 const createCategory = async (req, res) => {
     try {
         const {name, description} = req.body;
@@ -54,8 +58,7 @@ const getAllCategories = async (req, res) => {
 
 const getCategoryPageDetails = async (req, res) => {
     try {
-
-        const { categoryId } = req.body
+        const { categoryId } = req.body;
         const selectedCategory = await Category.findById(categoryId)
         .populate({
             path: "courses",
@@ -64,7 +67,7 @@ const getCategoryPageDetails = async (req, res) => {
         })
         .exec()
 
-        console.log("SELECTED COURSE", selectedCategory)
+        // console.log("SELECTED COURSE", selectedCategory)
         // Handle the case when the category is not found
         if (!selectedCategory) {
             console.log("Category not found.")
@@ -82,8 +85,8 @@ const getCategoryPageDetails = async (req, res) => {
 
         // Get courses for other categories
         const categoriesExceptSelected = await Category.find({_id: { $ne: categoryId }});
-
         let id = categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]._id;
+
         let differentCategory = await Category.findOne({_id: id})
         .populate({
             path: "courses",

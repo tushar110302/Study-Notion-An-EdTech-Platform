@@ -1,7 +1,7 @@
 import { toast } from "react-hot-toast"
 
 import { updateCompletedLectures } from "../../slices/viewCourseSlice"
-// import { setLoading } from "../../slices/profileSlice";
+
 import { apiConnector } from "../apiConnector"
 import { courseEndpoints } from "../api"
 
@@ -79,7 +79,7 @@ export const fetchCourseCategories = async () => {
     console.log("COURSE_CATEGORY_API API ERROR............", error)
     toast.error(error.message)
   }
-  return result
+  return result;
 }
 
 // add the course details
