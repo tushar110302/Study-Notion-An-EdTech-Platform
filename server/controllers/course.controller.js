@@ -311,50 +311,65 @@ const deleteCourse = async (req, res) => {
   }
 }
 const getCourseById = async (req, res) => { 
-    try {
-        const {courseId} = req.body;
-        if(!courseId){
-            return res.status(400).json({
-                success: false,
-                message: "Course ID is required"
-            });
-        }
+  try {
+    const { courseId } = req.body
+    const courseDetails = await Course.findOne({
+      _id: courseId,
+    })
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "profileDetails",
+        },
+      })
+      .populate("category")
+      .populate("ratingAndReviews")
+      .populate({
+        path: "sections",
+        populate: {
+          path: "subSections",
+          select: "-videoUrl",
+        },
+      })
+      .exec()
 
-        const course = await Course.findById(courseId)
-        .populate({
-            path: "instructor",
-            populate: {
-                path: "profileDetails"
-            }
-        })
-        .populate("category")
-        .populate({
-            path: "sections",
-            populate: {
-                path: "subSections",
-                select: "-videoUrl",
-            }
-        })
-        .populate("ratingAndReview");
-
-        if(!course){
-            return res.status(404).json({
-                success: false,
-                message: "Course not found"
-            });
-        }   
-
-        return res.status(200).json({
-            success: true,
-            message: "Course fetched successfully",
-            data: course
-        });
-    
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Could not fetch course"
-        });
+    if (!courseDetails) {
+      return res.status(400).json({
+        success: false,
+        message: `Could not find course with id: ${courseId}`,
+      })
     }
+
+    // if (courseDetails.status === "Draft") {
+    //   return res.status(403).json({
+    //     success: false,
+    //     message: `Accessing a draft course is forbidden`,
+    //   });
+    // }
+
+    let totalDurationInSeconds = 0;
+    courseDetails.sections.forEach((content) => {
+      content.subSections.forEach((subSection) => {
+        const timeDurationInSeconds = parseInt(subSection.timeDuration);
+        totalDurationInSeconds += timeDurationInSeconds;
+      })
+    })
+
+    const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        courseDetails,
+        totalDuration,
+      },
+    })
+  } 
+  catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
 }
 export {createCourse, editCourse, getAllCourses, getFullCourseDetails, getInstructorCourses, deleteCourse, getCourseById};

@@ -22,6 +22,7 @@ import { ACCOUNT_TYPE } from "./utils/constants"
 import MyCourses from "./components/Dashboard/MyCourses"
 import EditCourse from "./components/Dashboard/EditCourse"
 import Catalog from "./pages/Catalog"
+import CourseDetails from "./pages/CourseDetails"
 
 function App() {
   const {user} = useSelector(state => state.profile);
@@ -36,6 +37,7 @@ function App() {
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/catalog/:catalogName" element={<Catalog />} />
+        <Route path="/courses/:courseId" element={<CourseDetails />} />
         <Route path="/update-password/:id" 
           element={
             <OpenRoute>
