@@ -331,7 +331,7 @@ const getCourseById = async (req, res) => {
           select: "-videoUrl",
         },
       })
-      .exec()
+      .exec();
 
     if (!courseDetails) {
       return res.status(400).json({
