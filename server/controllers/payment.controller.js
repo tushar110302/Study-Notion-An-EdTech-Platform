@@ -5,6 +5,7 @@ import {sendMail} from '../utils/mailSender.js';
 import { courseEnrollmentEmail } from '../mail/templates/courseEnrollmentEmail.js';
 import mongoose from 'mongoose';
 import crypto from 'crypto';
+import { paymentSuccessEmail } from '../mail/templates/paymentSuccessEmail.js';
 
 const enrollStudent = async (courses, userId, res) => {
     try {
@@ -175,6 +176,47 @@ const verifySignature = async (req, res) => {
         });
     }
 }
+const sendPaymentSuccessEmail = async (req, res) => {
+    try {
+        const { orderId, paymentId, amount } = req.body
+    
+        const userId = req.user.id
+    
+        if (!orderId || !paymentId || !amount || !userId) {
+            return res.status(400).json({ 
+                success: false, 
+                message: "Please provide all the details" 
+            });
+        }
+  
+
+        const enrolledStudent = await User.findById(userId);
+  
+        await sendMail(
+            enrolledStudent.email,
+            paymentSuccessEmail(
+                `${enrolledStudent.firstName} ${enrolledStudent.lastName}`,
+                amount / 100,
+                orderId,
+                paymentId
+            ),
+            `Payment Received`
+        );
+
+    } catch (error) {
+        console.log("error in sending mail", error)
+        return res.status(400).json({
+            success: false, 
+            message: "Could not send email" 
+        })
+    }
+}
+export {
+    capturePayment,
+    verifySignature,
+    sendPaymentSuccessEmail
+};
+
 
 // *************** BELOW WORKS FOR A SINGLE COURSE ****************
 // const capturePayment = async (req, res) => {
@@ -303,7 +345,4 @@ const verifySignature = async (req, res) => {
 
 // }
 
-export {
-    capturePayment,
-    verifySignature
-};
+

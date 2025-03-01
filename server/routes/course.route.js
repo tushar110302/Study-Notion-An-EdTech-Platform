@@ -34,7 +34,7 @@ router.route('/getAllCourses').get(getAllCourses)
 router.route("/getInstructorCourses").get(verifyJWT, isInstructor, getInstructorCourses)
 router.route("/getFullCourseDetails").post(verifyJWT, getFullCourseDetails)
 // Get Details for a Specific Courses
-router.route('/getCourseDetails').get( getCourseById)
+router.route('/getCourseDetails').post( getCourseById)
 
 
 router.route("/updateCourseProgress").post(verifyJWT, isStudent, updateCourseProgress)

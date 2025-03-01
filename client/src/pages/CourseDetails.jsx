@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { BiInfoCircle } from "react-icons/bi"
 import { HiOutlineGlobeAlt } from "react-icons/hi"
-import { ReactMarkdown } from "react-markdown/lib/react-markdown"
+import  ReactMarkdown  from "react-markdown"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 
@@ -12,7 +12,7 @@ import CourseAccordionBar from "../components/Course/CourseAccordionBar"
 import CourseDetailsCard from "../components/Course/CourseDetailsCard"
 import { formattedDate } from "../utils/dateFormatter"
 import { fetchCourseDetails } from "../services/operations/courseDetailsAPI"
-import { BuyCourse } from "../services/operations/studentFeaturesAPI"
+import { buyCourse } from "../services/operations/studentFeaturesAPI"
 import GetAvgRating from "../utils/avgRating"
 import Error from "./Error"
 
@@ -70,8 +70,8 @@ function CourseDetails() {
   const [totalNoOfLectures, setTotalNoOfLectures] = useState(0)
   useEffect(() => {
     let lectures = 0
-    response?.data?.courseDetails?.courseContent?.forEach((sec) => {
-      lectures += sec.subSection.length || 0
+    response?.data?.courseDetails?.sections?.forEach((sec) => {
+      lectures += sec.subSections.length || 0
     })
     setTotalNoOfLectures(lectures)
   }, [response])
@@ -94,16 +94,16 @@ function CourseDetails() {
     thumbnail,
     price,
     whatYouWillLearn,
-    courseContent,
+    sections,
     ratingAndReviews,
     instructor,
-    studentsEnroled,
+    studentsEnrolled,
     createdAt,
   } = response.data?.courseDetails
 
   const handleBuyCourse = () => {
     if (token) {
-      BuyCourse(token, [courseId], user, navigate, dispatch)
+      buyCourse(token, [courseId], user, navigate, dispatch)
       return
     }
     setConfirmationModal({
@@ -152,7 +152,7 @@ function CourseDetails() {
                 <span className="text-yellow-25">{avgReviewCount}</span>
                 <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
                 <span>{`(${ratingAndReviews.length} reviews)`}</span>
-                <span>{`${studentsEnroled.length} students enrolled`}</span>
+                <span>{`${studentsEnrolled.length} students enrolled`}</span>
               </div>
               <div>
                 <p className="">
@@ -207,12 +207,12 @@ function CourseDetails() {
               <div className="flex flex-wrap justify-between gap-2">
                 <div className="flex gap-2">
                   <span>
-                    {courseContent.length} {`section(s)`}
+                    {sections.length} {`section(s)`}
                   </span>
                   <span>
                     {totalNoOfLectures} {`lecture(s)`}
                   </span>
-                  <span>{response.data?.totalDuration} total length</span>
+                  {/* <span>{response.data?.totalDuration} total length</span> */}
                 </div>
                 <div>
                   <button
@@ -227,7 +227,7 @@ function CourseDetails() {
 
             {/* Course Details Accordion */}
             <div className="py-4">
-              {courseContent?.map((course, index) => (
+              {sections?.map((course, index) => (
                 <CourseAccordionBar
                   course={course}
                   key={index}
@@ -242,11 +242,7 @@ function CourseDetails() {
               <p className="text-[28px] font-semibold">Author</p>
               <div className="flex items-center gap-4 py-4">
                 <img
-                  src={
-                    instructor.profileImage
-                      ? instructor.profileImage
-                      : `https://api.dicebear.com/5.x/initials/svg?seed=${instructor.firstName} ${instructor.lastName}`
-                  }
+                  src={instructor.profileImage}
                   alt="Author"
                   className="h-14 w-14 rounded-full object-cover"
                 />

@@ -4,14 +4,18 @@ import { AiOutlineDown } from "react-icons/ai"
 import CourseSubSectionAccordion from "./CourseSubSectionAccordion"
 
 export default function CourseAccordionBar({ course, isActive, handleActive }) {
-  const contentEl = useRef(null)
+
+  const contentEl = useRef(null);
+  const [sectionHeight, setSectionHeight] = useState(0);
 
   // Accordian state
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState(false);
+
   useEffect(() => {
     setActive(isActive?.includes(course._id))
   }, [isActive])
-  const [sectionHeight, setSectionHeight] = useState(0)
+  
+
   useEffect(() => {
     setSectionHeight(active ? contentEl.current.scrollHeight : 0)
   }, [active])
@@ -37,7 +41,7 @@ export default function CourseAccordionBar({ course, isActive, handleActive }) {
           </div>
           <div className="space-x-4">
             <span className="text-yellow-25">
-              {`${course.subSection.length || 0} lecture(s)`}
+              {`${course.subSections.length || 0} lecture(s)`}
             </span>
           </div>
         </div>
@@ -50,7 +54,7 @@ export default function CourseAccordionBar({ course, isActive, handleActive }) {
         }}
       >
         <div className="text-textHead flex flex-col gap-2 px-7 py-6 font-semibold">
-          {course?.subSection?.map((subSec, i) => {
+          {course?.subSections?.map((subSec, i) => {
             return <CourseSubSectionAccordion subSec={subSec} key={i} />
           })}
         </div>

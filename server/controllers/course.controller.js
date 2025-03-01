@@ -312,7 +312,8 @@ const deleteCourse = async (req, res) => {
 }
 const getCourseById = async (req, res) => { 
   try {
-    const { courseId } = req.body
+    const { courseId } = req.body;
+    console.log(courseId)
     const courseDetails = await Course.findOne({
       _id: courseId,
     })
@@ -323,7 +324,7 @@ const getCourseById = async (req, res) => {
         },
       })
       .populate("category")
-      .populate("ratingAndReviews")
+      // .populate("ratingAndReviews")
       .populate({
         path: "sections",
         populate: {
