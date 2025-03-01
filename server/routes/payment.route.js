@@ -5,6 +5,6 @@ import { verifyJWT, isStudent } from "../middlewares/auth.js";
 const router = Router();
 
 router.route("/capturePayment").post(verifyJWT, isStudent, capturePayment)
-router.route("/verifySignature").post(verifySignature)
+router.route("/verifySignature").post(verifyJWT, isStudent ,verifySignature)
 
 export default router;
