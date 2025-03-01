@@ -45,15 +45,11 @@ export const getUserEnrolledCourses = async (token) => {
         Authorization: `Bearer ${token}`,
       }
     )
-    // console.log(
-    //   "GET_USER_ENROLLED_COURSES_API API RESPONSE............",
-    //   response
-    // )
-
+    console.log(response.data.data)
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
-    console.log(response.data.data)
+    // console.log(response.data.data)
     result = response.data.data
   } catch (error) {
     console.log("GET_USER_ENROLLED_COURSES_API API ERROR............", error)
