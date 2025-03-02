@@ -56,8 +56,8 @@ function CourseDetails() {
   // console.log("avgReviewCount: ", avgReviewCount)
 
   // // Collapse all
-  // const [collapse, setCollapse] = useState("")
-  const [isActive, setIsActive] = useState(Array(0))
+
+  const [isActive, setIsActive] = useState([])
   const handleActive = (id) => {
     console.log("called", id);
     setIsActive(
@@ -78,17 +78,6 @@ function CourseDetails() {
     setTotalNoOfLectures(lectures)
   }, [response])
 
-  if (loading || !response || paymentLoading) {
-    return (
-      <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
-        <div className="spinner"></div>
-      </div>
-    )
-  }
-  if (!response.success) {
-    return <Error />
-  }
-
   const {
     _id: course_id,
     courseName,
@@ -101,7 +90,7 @@ function CourseDetails() {
     instructor,
     studentsEnrolled,
     createdAt,
-  } = response.data?.courseDetails
+  } = response.data?.courseDetails;
 
   const handleBuyCourse = () => {
     if (token) {
@@ -116,6 +105,18 @@ function CourseDetails() {
       btn1Handler: () => navigate("/login"),
       btn2Handler: () => setConfirmationModal(null),
     })
+  }
+
+  if (loading || !response || paymentLoading) {
+    return (
+      <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+        <div className="spinner"></div>
+      </div>
+    )
+  }
+
+  if (!response.success) {
+    return <Error />
   }
 
   return (

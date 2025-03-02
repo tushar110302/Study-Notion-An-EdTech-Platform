@@ -23,6 +23,8 @@ import MyCourses from "./components/Dashboard/MyCourses"
 import EditCourse from "./components/Dashboard/EditCourse"
 import Catalog from "./pages/Catalog"
 import CourseDetails from "./pages/CourseDetails"
+import VideoDetails from "./components/ViewCourse/VideoDetails"
+import ViewCourse from "./pages/ViewCourse"
 
 function App() {
   const {user} = useSelector(state => state.profile);
@@ -79,6 +81,21 @@ function App() {
               </>
           }
 
+        </Route>
+        <Route path="/view-course"
+          element={
+            <PrivateRoute>
+              <ViewCourse />
+            </PrivateRoute>
+          }
+        >
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route path=":courseId/section/:sectionId/sub-section/:subSectionId"
+                element={<VideoDetails />}
+              />
+            </>
+          )}
         </Route>
 
         <Route path="*" element={<Error />} />
