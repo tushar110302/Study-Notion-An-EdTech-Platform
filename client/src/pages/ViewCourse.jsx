@@ -22,7 +22,7 @@ export default function ViewCourse() {
   const fetchDetails = async () => {
     const courseData = await getFullDetailsOfCourse(courseId, token);
     // console.log("Course Data here... ", courseData.courseDetails)
-    dispatch(setCourseSectionData(courseData.courseDetails.courseContent));
+    dispatch(setCourseSectionData(courseData.courseDetails.sections));
     dispatch(setEntireCourseData(courseData.courseDetails));
     dispatch(setCompletedLectures(courseData.completedVideos));
 
@@ -32,7 +32,7 @@ export default function ViewCourse() {
     })
     dispatch(setTotalNoOfLectures(lectures));
   }
-  
+
   useEffect(() => {
     fetchDetails();
   }, [])

@@ -4,7 +4,6 @@ import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { getUserEnrolledCourses } from "../../services/operations/profileAPI"
 
-
 function EnrolledCourse() {
   const { token } = useSelector((state) => state.auth)
   const navigate = useNavigate()
@@ -34,7 +33,6 @@ function EnrolledCourse() {
         ) : !enrolledCourses.length ? (
           <p className="grid h-[10vh] w-full place-content-center text-richblack-5">
             You have not enrolled in any course yet.
-            {/* TODO: Modify this Empty State */}
           </p>
         ) : 
         (
@@ -74,8 +72,10 @@ function EnrolledCourse() {
                   <p>Progress: {course.progressPercentage || 0}%</p>
                   <Line
                     percent={course.progressPercentage || 0}
-                    strokeWidth={3}
-                    strokeColor='#D3D3D3'
+                    trailWidth={5}
+                    strokeWidth={5}
+                    trailColor="#474747"
+                    strokeColor='#2788e3'
                   />
                 </div>
               </div>

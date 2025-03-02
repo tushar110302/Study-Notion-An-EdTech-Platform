@@ -51,12 +51,7 @@ function ReviewSlider() {
                 <div className="flex flex-col gap-3 bg-richblack-800 p-3 text-[14px] text-richblack-25">
                   <div className="flex items-center gap-4">
                     <img
-                      src={
-                        review?.user?.profileImage
-                          // ? review?.user?.profileImage
-                          // : `https://api.dicebear.com/5.x/initials/svg?seed=${review?.user?.firstName} ${review?.user?.lastName}`
-                      }
-                      alt=""
+                      src={review?.user?.profileImage}
                       className="h-9 w-9 rounded-full object-cover"
                     />
                     <div className="flex flex-col">

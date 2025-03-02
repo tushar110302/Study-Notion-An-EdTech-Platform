@@ -6,6 +6,7 @@ import { courseEnrollmentEmail } from '../mail/templates/courseEnrollmentEmail.j
 import mongoose from 'mongoose';
 import crypto from 'crypto';
 import { paymentSuccessEmail } from '../mail/templates/paymentSuccessEmail.js';
+import { CourseProgress } from '../models/courseProgress.model.js';
 
 const enrollStudent = async (courses, userId, res) => {
     try {
@@ -30,10 +31,17 @@ const enrollStudent = async (courses, userId, res) => {
                 });
             }
 
+            const courseProgress = await CourseProgress.create({
+                courseId,
+                userId,
+                completedVideos: []
+            });
+
             const updatedStudent = await User.findByIdAndUpdate(userId,
                 {
                     $push: {
-                        courses: courseId
+                        courses: courseId,
+                        courseProgress: courseProgress._id
                     }
                 },
                 {new: true}

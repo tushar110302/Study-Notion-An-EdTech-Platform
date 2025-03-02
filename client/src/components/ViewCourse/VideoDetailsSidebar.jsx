@@ -7,6 +7,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom"
 import IconBtn from "../IconBtn"
 
 export default function VideoDetailsSidebar({ setReviewModal }) {
+  
   const [activeStatus, setActiveStatus] = useState("")
   const [videoBarActive, setVideoBarActive] = useState("")
   const navigate = useNavigate()
@@ -24,7 +25,7 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
       if (!courseSectionData.length) 
           return;
 
-      console.log("PRINTING SECTION DATA", courseSectionData)
+      console.log("PRINTING SECTION DATA", completedLectures)
       console.log("PRINTING ENTIRE DATA",  courseEntireData)
       const currentSectionIndx = courseSectionData.findIndex(
         (data) => data._id === sectionId
@@ -96,7 +97,7 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
               {/* Sub Sections */}
               {activeStatus === course?._id && (
                 <div className="transition-[height] duration-500 ease-in-out">
-                  {course.subSection.map((topic, i) => (
+                  {course.subSections.map((topic, i) => (
                     <div
                       className={`flex gap-3  px-5 py-2 ${
                         videoBarActive === topic._id

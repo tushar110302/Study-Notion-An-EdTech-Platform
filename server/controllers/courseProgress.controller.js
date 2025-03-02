@@ -2,44 +2,58 @@ import {SubSection} from "../models/subSection.model.js";
 import {CourseProgress} from "../models/courseProgress.model.js"
 
 const updateCourseProgress = async (req, res) => {
-  const { courseId, subsectionId } = req.body
-  const userId = req.user.id
-
   try {
-    // Check if the subsection is valid
-    const subsection = await SubSection.findById(subsectionId)
-    if (!subsection) {
-      return res.status(404).json({ error: "Invalid subsection" })
+    const { courseId, subSectionId } = req.body;
+    const userId = req.user._id;
+
+    const subSection = await SubSection.findById(subSectionId)
+    if (!subSection) {
+      return res.status(404).json({ 
+        success: false,
+        message: "Invalid subsection ID", 
+      });
     }
 
     // Find the course progress document for the user and course
     let courseProgress = await CourseProgress.findOne({
-      courseID: courseId,
-      userId: userId,
+      courseId,
+      userId,
     })
 
     if (!courseProgress) {
-      // If course progress doesn't exist, create a new one
+
       return res.status(404).json({
         success: false,
-        message: "Course progress Does Not Exist",
+        message: "Course Progress Not Found",
       })
-    } else {
 
-      if (courseProgress.completedVideos.includes(subsectionId)) {
-        return res.status(400).json({ error: "Subsection already completed" })
+    } 
+    else {
+
+      if (courseProgress.completedVideos.includes(subSectionId)) {
+        return res.status(400).json({ 
+          success: false,
+          message: "Subsection already completed",
+        });
       }
 
-      courseProgress.completedVideos.push(subsectionId)
+      courseProgress.completedVideos.push(subSectionId);
+      await courseProgress.save();
+  
+      return res.status(200).json({ 
+        success: true,
+        message: "Course progress updated",
+      });
     }
 
-    // Save the updated course progress
-    await courseProgress.save()
+  } 
+  catch (error) {
 
-    return res.status(200).json({ message: "Course progress updated" })
-  } catch (error) {
-    console.error(error)
-    return res.status(500).json({ error: "Internal server error" })
+    return res.status(500).json({ 
+      success: false,
+      message: "Internal server error",
+      error: error.message 
+    });
   }
 }
 export {updateCourseProgress};

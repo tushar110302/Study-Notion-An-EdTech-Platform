@@ -84,9 +84,9 @@ function App() {
         </Route>
         <Route path="/view-course"
           element={
-            <PrivateRoute>
+            <ProtectedRoute>
               <ViewCourse />
-            </PrivateRoute>
+            </ProtectedRoute>
           }
         >
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (

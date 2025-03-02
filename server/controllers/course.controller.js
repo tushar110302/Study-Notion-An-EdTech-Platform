@@ -169,11 +169,9 @@ const getFullCourseDetails = async (req, res) => {
         .exec()
   
       let courseProgressCount = await CourseProgress.findOne({
-        courseID: courseId,
-        userId: userId,
+        courseId,
+        userId,
       })
-  
-      console.log("courseProgressCount : ", courseProgressCount)
   
       if (!courseDetails) {
         return res.status(400).json({
@@ -182,15 +180,15 @@ const getFullCourseDetails = async (req, res) => {
         })
       }
   
-      let totalDurationInSeconds = 0
+      let totalDurationInSeconds = 0;
       courseDetails.sections.forEach((content) => {
         content.subSections.forEach((subSection) => {
-          const timeDurationInSeconds = parseInt(subSection.duration)
-          totalDurationInSeconds += timeDurationInSeconds
+          const timeDurationInSeconds = parseInt(subSection.duration);
+          totalDurationInSeconds += timeDurationInSeconds;
         })
       })
-  
-      const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
+      const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+
   
       return res.status(200).json({
         success: true,
@@ -201,7 +199,7 @@ const getFullCourseDetails = async (req, res) => {
             ? courseProgressCount?.completedVideos
             : [],
         },
-      })
+      });
     } catch (error) {
       return res.status(500).json({
         success: false,
@@ -324,7 +322,7 @@ const getCourseById = async (req, res) => {
         },
       })
       .populate("category")
-      // .populate("ratingAndReviews")
+      .populate("ratingAndReviews")
       .populate({
         path: "sections",
         populate: {
@@ -341,17 +339,10 @@ const getCourseById = async (req, res) => {
       })
     }
 
-    // if (courseDetails.status === "Draft") {
-    //   return res.status(403).json({
-    //     success: false,
-    //     message: `Accessing a draft course is forbidden`,
-    //   });
-    // }
-
     let totalDurationInSeconds = 0;
     courseDetails.sections.forEach((content) => {
       content.subSections.forEach((subSection) => {
-        const timeDurationInSeconds = parseInt(subSection.timeDuration);
+        const timeDurationInSeconds = parseInt(subSection.duration);
         totalDurationInSeconds += timeDurationInSeconds;
       })
     })
@@ -362,7 +353,7 @@ const getCourseById = async (req, res) => {
       success: true,
       data: {
         courseDetails,
-        // totalDuration,
+        totalDuration,
       },
     })
   } 

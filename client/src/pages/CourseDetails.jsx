@@ -31,9 +31,11 @@ function CourseDetails() {
   const [response, setResponse] = useState(null)
   const [confirmationModal, setConfirmationModal] = useState(null)
 
+
   const fetchCourse = async () => {
     try {
       const res = await fetchCourseDetails(courseId)
+
       setResponse(res)
     } catch (error) {
       console.log("Could not fetch Course Details")
@@ -78,19 +80,7 @@ function CourseDetails() {
     setTotalNoOfLectures(lectures)
   }, [response])
 
-  const {
-    _id: course_id,
-    courseName,
-    courseDescription,
-    thumbnail,
-    price,
-    whatYouWillLearn,
-    sections,
-    ratingAndReviews,
-    instructor,
-    studentsEnrolled,
-    createdAt,
-  } = response.data?.courseDetails;
+  
 
   const handleBuyCourse = () => {
     if (token) {
@@ -107,6 +97,7 @@ function CourseDetails() {
     })
   }
 
+  
   if (loading || !response || paymentLoading) {
     return (
       <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
@@ -114,6 +105,20 @@ function CourseDetails() {
       </div>
     )
   }
+  
+  const {
+    // _id: course_id,
+    courseName,
+    courseDescription,
+    thumbnail,
+    price,
+    whatYouWillLearn,
+    sections,
+    ratingAndReviews,
+    instructor,
+    studentsEnrolled,
+    createdAt,
+  } = response?.data?.courseDetails;
 
   if (!response.success) {
     return <Error />
@@ -208,7 +213,7 @@ function CourseDetails() {
                   <span>
                     {totalNoOfLectures} {`lecture(s)`}
                   </span>
-
+                  <span>{response.data?.totalDuration} total length</span>
                 </div>
                 <div>
                   <button

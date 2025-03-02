@@ -6,6 +6,8 @@ import { useSelector } from "react-redux"
 import { createRating } from "../../services/operations/courseDetailsAPI"
 import IconBtn from "../IconBtn"
 
+import { FaStar } from "react-icons/fa"
+
 export default function CourseReviewModal({ setReviewModal }) {
 
   const { user } = useSelector((state) => state.profile)
@@ -22,7 +24,7 @@ export default function CourseReviewModal({ setReviewModal }) {
   useEffect(() => {
     setValue("courseExperience", "")
     setValue("courseRating", 0)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [])
 
   const ratingChanged = (newRating) => {
@@ -56,7 +58,7 @@ export default function CourseReviewModal({ setReviewModal }) {
         <div className="p-6">
           <div className="flex items-center justify-center gap-x-4">
             <img
-              src={user?.image}
+              src={user?.profileImage}
               alt={user?.firstName + "profile"}
               className="aspect-square w-[50px] rounded-full object-cover"
             />
@@ -72,10 +74,18 @@ export default function CourseReviewModal({ setReviewModal }) {
             className="mt-6 flex flex-col items-center"
           >
             <ReactStars
+              // count={5}
+              // value={1}
+              // onChange={ratingChanged}
+              // size={24}
+              // activeColor="#ffd700"
               count={5}
-              onChange={ratingChanged}
-              size={24}
-              activeColor="#ffd700"
+
+                                    size={20}
+                                    edit={false}
+                                    activeColor="#ffd700"
+                                    emptyIcon={<FaStar />}
+                                    fullIcon={<FaStar />}
             />
             <div className="flex w-11/12 flex-col space-y-2">
               <label

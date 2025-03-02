@@ -1,6 +1,8 @@
 import { Profile } from "../models/profile.model.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import {CourseProgress} from "../models/courseProgress.model.js";
+import { convertSecondsToDuration } from '../utils/secToDuration.js';
 
 const updateProfile = async (req, res) => {
     try {
@@ -115,7 +117,7 @@ const updateDisplayPicture = async (req, res) => {
 const getEnrolledCourses = async (req, res) => {
     try {
         const userId = req.user._id;
-        const user = await User.findById(userId)
+        let user = await User.findById(userId)
         .populate({
             path: "courses",
             populate:{
@@ -130,6 +132,33 @@ const getEnrolledCourses = async (req, res) => {
                 success: false,
                 message: "User not found"
             });
+        }
+
+        user = user.toObject();
+        let subsectionLength = 0;
+
+        for (let i = 0; i < user.courses.length; i++) {
+            let totalDurationInSeconds = 0;
+            subsectionLength = 0;
+
+            for (let j = 0; j < user.courses[i].sections.length; j++) {
+
+                totalDurationInSeconds += user.courses[i].sections[j].subSections.reduce((acc, curr) => acc + parseInt(curr.duration), 0);
+                user.courses[i].totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+                subsectionLength += user.courses[i].sections[j].subSections.length;
+            }        
+
+            let courseProgressCount = await CourseProgress.findOne({
+                courseId: user.courses[i]._id,
+                userId: userId,
+            });
+            courseProgressCount = courseProgressCount?.completedVideos.length;
+            if (subsectionLength === 0) {
+                user.courses[i].progressPercentage = 100;
+            } 
+            else {
+                user.courses[i].progressPercentage = Math.round((courseProgressCount / subsectionLength) * 100 ) 
+            }
         }
 
         return res.status(200).json({

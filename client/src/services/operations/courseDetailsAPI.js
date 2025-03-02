@@ -25,10 +25,11 @@ const {
 } = courseEndpoints
 
 export const getAllCourses = async () => {
-  const toastId = toast.loading("Loading...")
-  let result = []
+  const toastId = toast.loading("Loading...");
+  let result = [];
   try {
-    const response = await apiConnector("GET", GET_ALL_COURSE_API)
+    const response = await apiConnector("GET", GET_ALL_COURSE_API);
+
     if (!response?.data?.success) {
       throw new Error("Could Not Fetch Course Categories")
     }
@@ -47,11 +48,12 @@ export const fetchCourseDetails = async (courseId) => {
     try {
         const response = await apiConnector("POST", COURSE_DETAILS_API, {courseId});
 
-        console.log("COURSE_DETAILS_API API RESPONSE............", response);
+        // console.log("COURSE_DETAILS_API API RESPONSE............", response);
 
         if (!response.data.success) {
           throw new Error(response.data.message);
         }
+
         result = response.data;
 
     } 
@@ -69,7 +71,7 @@ export const fetchCourseCategories = async () => {
   let result = []
   try {
     const response = await apiConnector("GET", COURSE_CATEGORIES_API);
-    console.log("COURSE_CATEGORIES_API API RESPONSE............", response);
+    // console.log("COURSE_CATEGORIES_API API RESPONSE............", response);
     if (!response?.data?.success) {
       throw new Error("Could Not Fetch Course Categories");
     }
@@ -138,7 +140,7 @@ export const createSection = async (data, token) => {
     const response = await apiConnector("POST", CREATE_SECTION_API, data, {
       Authorization: `Bearer ${token}`,
     })
-    console.log("CREATE SECTION API RESPONSE............", response)
+    // console.log("CREATE SECTION API RESPONSE............", response);
     if (!response?.data?.success) {
       throw new Error("Could Not Create Section")
     }
