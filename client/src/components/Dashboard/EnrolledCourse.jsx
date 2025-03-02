@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import { Line, } from 'rc-progress';
-import { BiDotsVerticalRounded } from "react-icons/bi"
+import { Line } from 'rc-progress';
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { getUserEnrolledCourses } from "../../services/operations/profileAPI"
@@ -12,16 +11,9 @@ function EnrolledCourse() {
 
   const [enrolledCourses, setEnrolledCourses] = useState(null);
    const fetchUSerCourses = async() => {
+
     try {
       const res = await getUserEnrolledCourses(token) // Getting all the published and the drafted courses
-
-      // Filtering the published course out
-      // const filterPublishCourse = res.filter((ele) => ele.status !== "Draft")
-      // console.log(
-      //   "Viewing all the couse that is Published",
-      //   filterPublishCourse
-      // )
-
       setEnrolledCourses(res)
     } catch (error) {
       console.log("Could not fetch enrolled courses.")
