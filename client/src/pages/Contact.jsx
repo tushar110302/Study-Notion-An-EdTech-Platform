@@ -1,7 +1,7 @@
 import React from 'react'
 import ContactDetails from '../components/Contact/ContactDetails'
 import ContactForm from '../components/Contact/ContactForm'
-import ReviewSlider from '../components/Home/ReviewSlider'
+import ReviewSlider from '../components/ReviewSlider'
 import Footer from '../components/Footer'
 
 function Contact() {

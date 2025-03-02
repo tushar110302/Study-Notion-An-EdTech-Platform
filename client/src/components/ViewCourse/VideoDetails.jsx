@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 
-// import "video-react/dist/video-react.css"
 import { useLocation } from "react-router-dom"
-// import { BigPlayButton, Player } from "video-react"
+
 import ReactPlayer from "react-player"
 
 import { markLectureAsComplete } from "../../services/operations/courseDetailsAPI"
@@ -177,7 +176,9 @@ const VideoDetails = () => {
                 onEnded={() => setVideoEnded(true) }
                 onPlay={() => console.log("Started") }
                 onPause={() => console.log("Paused") }
-                style={{ width: "100%", height: "100%" }}
+                width={"100%"}
+                height={"calc(100vh - 13rem)"}
+
             />
             { videoEnded && 
               <div
@@ -241,16 +242,3 @@ const VideoDetails = () => {
 }
 
 export default VideoDetails
-// video
-
-/* <Player
-          ref={playerRef}
-          aspectRatio="16:9"
-          playsInline
-          onEnded={() => setVideoEnded(true)}
-          src={videoData?.videoUrl}
-        >
-          <BigPlayButton position="center" />
-
-          
-        </Player> */

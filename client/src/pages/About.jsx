@@ -7,7 +7,7 @@ import StatsComponent from '../components/About/StatsComponent'
 import Footer from '../components/Footer'
 import LearningGrid from '../components/About/LearningGrid'
 import ContactUsSection from '../components/About/ContactUsSection'
-import ReviewSlider from '../components/Home/ReviewSlider'
+import ReviewSlider from '../components/ReviewSlider'
 
 function About() {
   return (

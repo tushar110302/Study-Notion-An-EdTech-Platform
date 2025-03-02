@@ -8,7 +8,7 @@ import CodeBlock from '../components/Home/CodeBlock'
 import LearnLanguageSection from '../components/Home/LearnLanguageSection'
 import TimelineSection from '../components/Home/TimelineSection'
 import InstructorSection from '../components/Home/InstructorSection'
-import ReviewSlider from '../components/Home/ReviewSlider'
+import ReviewSlider from '../components/ReviewSlider'
 import Footer from '../components/Footer'
 import ExploreMore from '../components/Home/ExploreMore'
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import ReactStars from "react-rating-stars-component"
+import ReactStars from "react-stars"
 
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
@@ -32,9 +32,9 @@ function ReviewSlider() {
 
   return (
     <div className="text-white">
-      <div className="my-[50px] h-[184px] max-w-maxContentTab lg:max-w-maxContent">
+      <div className="my-[50px] h-[184px] w-11/12">
         <Swiper
-          slidesPerView={4}
+          slidesPerView={1}
           spaceBetween={25}
           loop={true}
           freeMode={true}
@@ -48,7 +48,7 @@ function ReviewSlider() {
           {reviews.map((review, i) => {
             return (
               <SwiperSlide key={i}>
-                <div className="flex flex-col gap-3 bg-richblack-800 p-3 text-[14px] text-richblack-25">
+                <div className="flex flex-col gap-3 bg-richblack-800 p-3 text-[14px]  text-richblack-25">
                   <div className="flex items-center gap-4">
                     <img
                       src={review?.user?.profileImage}

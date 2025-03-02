@@ -1,12 +1,10 @@
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { RxCross2 } from "react-icons/rx"
-import ReactStars from "react-rating-stars-component"
+import ReactStars from "react-stars"
 import { useSelector } from "react-redux"
 import { createRating } from "../../services/operations/courseDetailsAPI"
 import IconBtn from "../IconBtn"
-
-import { FaStar } from "react-icons/fa"
 
 export default function CourseReviewModal({ setReviewModal }) {
 
@@ -28,8 +26,7 @@ export default function CourseReviewModal({ setReviewModal }) {
   }, [])
 
   const ratingChanged = (newRating) => {
-    // console.log(newRating)
-    setValue("courseRating", newRating)
+    setValue("courseRating", newRating);
   }
 
   const onSubmit = async (data) => {
@@ -74,19 +71,11 @@ export default function CourseReviewModal({ setReviewModal }) {
             className="mt-6 flex flex-col items-center"
           >
             <ReactStars
-              // count={5}
-              // value={1}
-              // onChange={ratingChanged}
-              // size={24}
-              // activeColor="#ffd700"
               count={5}
-
-                                    size={20}
-                                    edit={false}
-                                    activeColor="#ffd700"
-                                    emptyIcon={<FaStar />}
-                                    fullIcon={<FaStar />}
-            />
+              onChange={ratingChanged}
+              size={30}
+              color2={"#ffd700"}
+              />
             <div className="flex w-11/12 flex-col space-y-2">
               <label
                 className="text-sm text-richblack-5"

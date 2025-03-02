@@ -30,10 +30,10 @@ function Catalog() {
   }
   const getCatalogData = async () => {
     try {
-      console.log(categoryId)
+      // console.log(categoryId)
       const res = await getCatalogPageData(categoryId);
-      console.log("CATALOG DATA FETCHED");
-      console.log(res);
+      // console.log("CATALOG DATA FETCHED");
+      // console.log(res);
       setCatalogPageData(res);
     } 
     catch (error) {

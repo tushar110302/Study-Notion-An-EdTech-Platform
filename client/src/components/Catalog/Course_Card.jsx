@@ -7,7 +7,8 @@ import RatingStars from "../RatingStars"
 function Course_Card({ course, Height }) {
   // const avgReviewCount = GetAvgRating(course.ratingAndReviews)
   // console.log(course.ratingAndReviews)
-  const [avgReviewCount, setAvgReviewCount] = useState(0)
+  const [avgReviewCount, setAvgReviewCount] = useState(0);
+
   useEffect(() => {
     const count = GetAvgRating(course.ratingAndReviews)
     setAvgReviewCount(count)

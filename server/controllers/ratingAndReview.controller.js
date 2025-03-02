@@ -13,18 +13,17 @@ const createRating = async (req, res) => {
                 message: "All fields are required"
             });
         }
-
-        const course = await Course.findOne( {courseId,
-            studentsEnrolled: {$elemMatch: {$eq: userId} }
+        const course = await Course.findOne({
+            _id:courseId,
+            studentsEnrolled: { $elemMatch: { $eq: userId } },
         });
-
+    
         if(!course){
             return res.status(404).json({
                 success: false,
                 message: "Student is not enrolled in this course"
             });
         }
-
 
         const checkReviewed = await RatingAndReview.findOne({user: userId, course: courseId});
         if(checkReviewed){
