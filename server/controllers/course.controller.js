@@ -313,7 +313,7 @@ const deleteCourse = async (req, res) => {
 const getCourseById = async (req, res) => { 
   try {
     const { courseId } = req.body;
-    console.log(courseId)
+
     const courseDetails = await Course.findOne({
       _id: courseId,
     })
@@ -362,7 +362,7 @@ const getCourseById = async (req, res) => {
       success: true,
       data: {
         courseDetails,
-        totalDuration,
+        // totalDuration,
       },
     })
   } 

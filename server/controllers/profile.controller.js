@@ -115,8 +115,16 @@ const updateDisplayPicture = async (req, res) => {
 const getEnrolledCourses = async (req, res) => {
     try {
         const userId = req.user._id;
-        const user = await User.findById(userId).populate("courses");
-
+        const user = await User.findById(userId)
+        .populate({
+            path: "courses",
+            populate:{
+                path: "sections",
+                populate: {
+                    path: "subSections",
+                },
+            }
+        });
         if(!user){
             return res.status(404).json({
                 success: false,

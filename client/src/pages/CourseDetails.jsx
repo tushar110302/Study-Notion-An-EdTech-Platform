@@ -17,6 +17,7 @@ import GetAvgRating from "../utils/avgRating"
 import Error from "./Error"
 
 function CourseDetails() {
+
   const { user } = useSelector((state) => state.profile)
   const { token } = useSelector((state) => state.auth)
   const { loading } = useSelector((state) => state.profile)
@@ -24,30 +25,30 @@ function CourseDetails() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  // Getting courseId from url parameter
   const { courseId } = useParams()
-  // console.log(`course id: ${courseId}`)
 
   // Declear a state to save the course details
   const [response, setResponse] = useState(null)
   const [confirmationModal, setConfirmationModal] = useState(null)
+
+  const fetchCourse = async () => {
+    try {
+      const res = await fetchCourseDetails(courseId)
+      setResponse(res)
+    } catch (error) {
+      console.log("Could not fetch Course Details")
+    }
+  }
   useEffect(() => {
     // Calling fetchCourseDetails fucntion to fetch the details
-    ;(async () => {
-      try {
-        const res = await fetchCourseDetails(courseId)
-        // console.log("course details res: ", res)
-        setResponse(res)
-      } catch (error) {
-        console.log("Could not fetch Course Details")
-      }
-    })()
+    fetchCourse();
   }, [courseId])
 
   // console.log("response: ", response)
 
   // Calculating Avg Review count
-  const [avgReviewCount, setAvgReviewCount] = useState(0)
+  const [avgReviewCount, setAvgReviewCount] = useState(0);
+
   useEffect(() => {
     const count = GetAvgRating(response?.data?.courseDetails.ratingAndReviews)
     setAvgReviewCount(count)
@@ -58,7 +59,7 @@ function CourseDetails() {
   // const [collapse, setCollapse] = useState("")
   const [isActive, setIsActive] = useState(Array(0))
   const handleActive = (id) => {
-    // console.log("called", id)
+    console.log("called", id);
     setIsActive(
       !isActive.includes(id)
         ? isActive.concat([id])
@@ -67,16 +68,17 @@ function CourseDetails() {
   }
 
   // Total number of lectures
-  const [totalNoOfLectures, setTotalNoOfLectures] = useState(0)
+  const [totalNoOfLectures, setTotalNoOfLectures] = useState(0);
+
   useEffect(() => {
-    let lectures = 0
+    let lectures = 0;
     response?.data?.courseDetails?.sections?.forEach((sec) => {
       lectures += sec.subSections.length || 0
     })
     setTotalNoOfLectures(lectures)
   }, [response])
 
-  if (loading || !response) {
+  if (loading || !response || paymentLoading) {
     return (
       <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
         <div className="spinner"></div>
@@ -103,8 +105,8 @@ function CourseDetails() {
 
   const handleBuyCourse = () => {
     if (token) {
-      buyCourse(token, [courseId], user, navigate, dispatch)
-      return
+      buyCourse(token, [courseId], user, navigate, dispatch);
+      return;
     }
     setConfirmationModal({
       text1: "You are not logged in!",
@@ -114,15 +116,6 @@ function CourseDetails() {
       btn1Handler: () => navigate("/login"),
       btn2Handler: () => setConfirmationModal(null),
     })
-  }
-
-  if (paymentLoading) {
-    // console.log("payment loading")
-    return (
-      <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
-        <div className="spinner"></div>
-      </div>
-    )
   }
 
   return (
@@ -149,6 +142,7 @@ function CourseDetails() {
               </div>
               <p className={`text-richblack-200`}>{courseDescription}</p>
               <div className="text-md flex flex-wrap items-center gap-2">
+              {/* CHECK FOR REVIEW COUNT */}
                 <span className="text-yellow-25">{avgReviewCount}</span>
                 <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
                 <span>{`(${ratingAndReviews.length} reviews)`}</span>
@@ -190,9 +184,10 @@ function CourseDetails() {
           </div>
         </div>
       </div>
+      
       <div className="mx-auto box-content px-4 text-start text-richblack-5 lg:w-[1260px]">
         <div className="mx-auto max-w-maxContentTab lg:mx-0 xl:max-w-[810px]">
-          {/* What will you learn section */}
+
           <div className="my-8 border border-richblack-600 p-8">
             <p className="text-3xl font-semibold">What you'll learn</p>
             <div className="mt-5">
@@ -200,7 +195,7 @@ function CourseDetails() {
             </div>
           </div>
 
-          {/* Course Content Section */}
+
           <div className="max-w-[830px] ">
             <div className="flex flex-col gap-3">
               <p className="text-[28px] font-semibold">Course Content</p>
@@ -212,7 +207,7 @@ function CourseDetails() {
                   <span>
                     {totalNoOfLectures} {`lecture(s)`}
                   </span>
-                  {/* <span>{response.data?.totalDuration} total length</span> */}
+
                 </div>
                 <div>
                   <button
@@ -225,11 +220,11 @@ function CourseDetails() {
               </div>
             </div>
 
-            {/* Course Details Accordion */}
+
             <div className="py-4">
-              {sections?.map((course, index) => (
+              {sections?.map((section, index) => (
                 <CourseAccordionBar
-                  course={course}
+                  section={section}
                   key={index}
                   isActive={isActive}
                   handleActive={handleActive}
@@ -237,7 +232,7 @@ function CourseDetails() {
               ))}
             </div>
 
-            {/* Author Details */}
+
             <div className="mb-12 py-4">
               <p className="text-[28px] font-semibold">Author</p>
               <div className="flex items-center gap-4 py-4">
@@ -252,7 +247,8 @@ function CourseDetails() {
                 {instructor?.profileDetails?.about}
               </p>
             </div>
-          </div>
+          </div> 
+
         </div>
       </div>
       <Footer />

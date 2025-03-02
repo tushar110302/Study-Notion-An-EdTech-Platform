@@ -102,9 +102,9 @@ const capturePayment = async (req, res) => {
             totalAmount += course.price;
         }
         const options = {
-            amount: amount * 100,
-            currency,
-            receipt: `receipt_${userId}_${Date.now().toString()}`,
+            amount: totalAmount * 100,
+            currency: "INR",
+            receipt: Math.random(Date.now()).toString(),
             // notes: {
             //     courseId,
             //     userId
@@ -112,8 +112,8 @@ const capturePayment = async (req, res) => {
         };
 
         const paymentResponse = await instance.orders.create(options);
-        console.log("PAYMENT RESPONSE: ")
-        console.log(paymentResponse);
+        // console.log("PAYMENT RESPONSE: ")
+        // console.log(paymentResponse);
 
         return res.status(200).json({
             success: true,
@@ -136,6 +136,7 @@ const capturePayment = async (req, res) => {
 
 const verifySignature = async (req, res) => {
     try {
+        console.log(req.body)
         const {razorpay_signature, razorpay_payment_id, razorpay_order_id} = req.body;
         const courses = req.body.courses;
         const userId = req.user._id;
@@ -147,12 +148,12 @@ const verifySignature = async (req, res) => {
             });
         }
 
-        const secret = process.env.RAZORPAY_SECRET;
+        const secret = process.env.RAZORPAY_KEY_SECRET;
         let body = razorpay_order_id + "|" + razorpay_payment_id;
 
         const expectedSignature = crypto.createHmac('sha256', secret).update(body.toString()).digest('hex');
 
-        if(expectedSignature !== razorpay_signature){
+        if(expectedSignature == razorpay_signature){
 
             await enrollStudent(courses, userId, res);
 

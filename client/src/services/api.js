@@ -1,10 +1,5 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-// CATAGORIES API
-// export const categories = {
-//     CATEGORY_API: `${BASE_URL}/course/showAllCategories`
-// }
-
 // AUTHEENTICATION ENDPOINTS
 export const authEndpoints = {
     SENDOTP_API: `${BASE_URL}/auth/sendotp`,
@@ -14,6 +9,8 @@ export const authEndpoints = {
     RESETPASSWORD_API: `${BASE_URL}/auth/reset-password`,
     CHANGEPASSWORD_API: `${BASE_URL}/auth/changePassword`
 }
+
+// PROFILE ENDPOINTS
 export const profileEndpoints = {
     GET_USER_DETAILS_API: `${BASE_URL}/profile/getUserDetails`,
     GET_USER_ENROLLED_COURSES_API:`${BASE_URL}/profile/getEnrolledCourses`,
@@ -23,7 +20,7 @@ export const profileEndpoints = {
   // STUDENTS ENDPOINTS
   export const studentEndpoints = {
     COURSE_PAYMENT_API: `${BASE_URL}/payment/capturePayment`,
-    COURSE_VERIFY_API: `${BASE_URL}/payment/verifyPayment`,
+    COURSE_VERIFY_API: `${BASE_URL}/payment/verifySignature`,
     SEND_PAYMENT_SUCCESS_EMAIL_API: `${BASE_URL}/payment/sendPaymentSuccessEmail`,
   }
   
@@ -56,6 +53,7 @@ export const profileEndpoints = {
   export const catalogData = {
     CATALOGPAGEDATA_API: `${BASE_URL}/course/getCategoryPageDetails`,
   }
+
   // CONTACT-US API
   export const contactusEndpoint = {
     CONTACT_US_API: `${BASE_URL}/reach-us/contact`,
