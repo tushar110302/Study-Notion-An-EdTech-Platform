@@ -19,23 +19,20 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
     completedLectures,
   } = useSelector((state) => state.viewCourse)
 
+  const setInitialDdata = () => {
+    if (!courseSectionData.length) 
+        return;
+
+    const currentSectionIndx = courseSectionData.findIndex((data) => data._id === sectionId);
+
+    const currentSubSectionIndx = courseSectionData?.[currentSectionIndx]?.subSections.findIndex((data) => data._id === subSectionId);
+    const activeSubSectionId = courseSectionData[currentSectionIndx]?.subSections?.[currentSubSectionIndx]?._id;
+
+    setActiveStatus(courseSectionData?.[currentSectionIndx]?._id);
+    setVideoBarActive(activeSubSectionId);
+  }
   useEffect(() => {
-    ;(() => {
-      if (!courseSectionData.length) 
-          return;
-
-      console.log("PRINTING SECTION DATA", completedLectures)
-      console.log("PRINTING ENTIRE DATA",  courseEntireData)
-      const currentSectionIndx = courseSectionData.findIndex(
-        (data) => data._id === sectionId
-      )
-      const currentSubSectionIndx = courseSectionData?.[currentSectionIndx]?.subSections.findIndex((data) => data._id === subSectionId)
-      const activeSubSectionId = courseSectionData[currentSectionIndx]?.subSections?.[currentSubSectionIndx]?._id
-
-      setActiveStatus(courseSectionData?.[currentSectionIndx]?._id)
-      setVideoBarActive(activeSubSectionId)
-    })()
-
+    setInitialDdata();
   }, [courseSectionData, courseEntireData, location.pathname])
 
   return (

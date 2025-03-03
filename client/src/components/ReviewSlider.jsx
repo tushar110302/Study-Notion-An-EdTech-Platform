@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react"
 import ReactStars from "react-stars"
 
 import { Swiper, SwiperSlide } from "swiper/react"
-import { Autoplay, FreeMode, Pagination } from "swiper/modules"
-import "swiper/css"
+import { Autoplay, FreeMode, Navigation, Pagination, Scrollbar, A11y } from "swiper/modules"
+import "swiper/css/bundle"
 import "swiper/css/free-mode"
 import "swiper/css/pagination"
 
@@ -30,7 +30,7 @@ function ReviewSlider() {
     <div className="text-white">
       <div className="my-[50px] h-[184px] w-11/12">
         <Swiper
-          slidesPerView={1}
+          slidesPerView={4}
           spaceBetween={25}
           loop={true}
           freeMode={true}
@@ -39,12 +39,12 @@ function ReviewSlider() {
             disableOnInteraction: false,
           }}
           modules={[FreeMode, Pagination, Autoplay]}
-          className="w-full "
+          className="w-[1280px]"
         >
           {reviews.map((review, i) => {
             return (
               <SwiperSlide key={i}>
-                <div className="flex flex-col gap-3 bg-richblack-800 p-3 text-[14px]  text-richblack-25">
+                <div className=" flex flex-col gap-3 bg-richblack-800 p-3 text-[14px]  text-richblack-25">
                   <div className="flex items-center gap-4">
                     <img
                       src={review?.user?.profileImage}

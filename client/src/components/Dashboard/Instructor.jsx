@@ -12,7 +12,7 @@ export default function Instructor() {
   const [instructorData, setInstructorData] = useState(null)
   const [courses, setCourses] = useState([])
 
-  const getInstructorData = async () => {
+  const fetchInstructorData = async () => {
     setLoading(true);
     const instructorApiData = await getInstructorData(token);
     const result = await fetchInstructorCourses(token);
@@ -26,7 +26,7 @@ export default function Instructor() {
     setLoading(false);
   }
   useEffect(() => {
-    getInstructorData();
+    fetchInstructorData();
   }, [])
 
   const totalAmount = instructorData?.reduce((acc, curr) => acc + curr.totalAmountGenerated, 0);

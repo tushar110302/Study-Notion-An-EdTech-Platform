@@ -83,9 +83,10 @@ const createCourse = async (req, res) => {
 const editCourse = async (req, res) => {
     try {
 
-      const { courseId } = req.body
-      const updates = Object.fromEntries(req.body.entries ? req.body.entries() : Object.entries(req.body));
-      console.log(typeof updates)
+      const { courseId } = req.body;
+
+      const updates = req.body;
+      console.log(Object.keys(updates)) 
       const course = await Course.findById(courseId)
   
       if (!course) {
@@ -94,25 +95,21 @@ const editCourse = async (req, res) => {
   
       // If Thumbnail Image is found, update it
       if (req.files) {
-        console.log("thumbnail update")
         const thumbnail = req.files.path
         const thumbnailImage = await uploadOnCloudinary(thumbnail)
         course.thumbnail = thumbnailImage.secure_url
       }
   
       // Update only the fields that are present in the request body
-      for (const key in updates) {
-        console.log(key)
-        if (updates.hasOwnProperty(key)) {
-          if (key === "tag" || key === "instructions") {
-            course[key] = JSON.parse(updates[key])
-          } else {
-            course[key] = updates[key]
-          }
+      for (const key of Object.keys(updates)) {
+        if (key === "tag") {
+          course[key] = JSON.parse(updates[key])
+        } else {
+          course[key] = updates[key]
         }
       }
   
-      await course.save()
+      await course.save();
   
       const updatedCourse = await Course.findOne({
         _id: courseId,
@@ -131,16 +128,15 @@ const editCourse = async (req, res) => {
             path: "subSections",
           },
         })
-        .exec()
   
-      res.json({
+      return res.status(200).json({
         success: true,
         message: "Course updated successfully",
         data: updatedCourse,
       })
-    } catch (error) {
-      console.error(error)
-      res.status(500).json({
+    } 
+    catch (error) {
+      return res.status(500).json({
         success: false,
         message: "Internal server error",
         error: error.message,

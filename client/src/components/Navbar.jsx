@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom"
 import logo from '../assets/Logo/Logo-Full-Light.png'
-import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai"
+import { AiOutlineShoppingCart } from "react-icons/ai"
 import { TiArrowSortedDown } from "react-icons/ti";
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
@@ -70,41 +70,45 @@ function Navbar(){
                         </li>
                     </ul>
                 </div>
-                <div className='sm:flex items-center gap-4 hidden'>
-                    {
-                        user && user?.accountType !== "Instructor" &&
-                        <Link to={"/dashboard/cart"} className="relative">
-                                <AiOutlineShoppingCart className="text-2xl text-richblack-100"/>
-                                {
-                                    totalItems > 0 &&
-                                        <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-yellow-100">
-                                            {totalItems}
-                                        </span>
-                                }
-                        </Link>
-                    }
-                    {
-                        token === null &&
-                            <Link to="/login" >
-                                <button className='bg-richblack-800 text-richblack-100 py-[8px] hover:text-richblack-5 px-[18px] rounded-[8px] border border-richblack-700 hover:border-richblack-5'>
-                                    Log In
-                                </button>
+                <div className='flex gap-4'>
+                    <div className="sm:flex items-center gap-4 hidden">
+                        {
+                            user && user?.accountType !== "Instructor" &&
+                            <Link to={"/dashboard/cart"} className="relative">
+                                    <AiOutlineShoppingCart className="text-2xl text-richblack-100"/>
+                                    {
+                                        totalItems > 0 &&
+                                            <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-yellow-100">
+                                                {totalItems}
+                                            </span>
+                                    }
                             </Link>
-                    }
-                    
-                    {
-                        token === null &&
-                            <Link to="/signup">
-                                <button className='bg-richblack-800 text-richblack-100 py-[8px] hover:text-richblack-5 px-[18px] rounded-[8px] border border-richblack-700 hover:border-richblack-5'>
-                                    Sign Up
-                                </button>
-                            </Link>
-                    }
-                    
+                        }
+                        {
+                            token === null &&
+                                <Link to="/login" >
+                                    <button className='bg-richblack-800 text-richblack-100 py-[8px] hover:text-richblack-5 px-[18px] rounded-[8px] border border-richblack-700 hover:border-richblack-5'>
+                                        Log In
+                                    </button>
+                                </Link>
+                        }
+                        
+                        {
+                            token === null &&
+                                <Link to="/signup">
+                                    <button className='bg-richblack-800 text-richblack-100 py-[8px] hover:text-richblack-5 px-[18px] rounded-[8px] border border-richblack-700 hover:border-richblack-5'>
+                                        Sign Up
+                                    </button>
+                                </Link>
+                        }
+                    </div>
+                    <div>
+                        {
+                            token && <ProfileDropDown />
+                        }
+                    </div>
                 </div>
-                    {
-                        token && <ProfileDropDown />
-                    }
+                
             </nav>
         </header>
     )

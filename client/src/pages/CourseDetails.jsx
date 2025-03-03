@@ -45,8 +45,6 @@ function CourseDetails() {
     fetchCourse();
   }, [courseId])
 
-  // console.log("response: ", response)
-
   // Calculating Avg Review count
   const [avgReviewCount, setAvgReviewCount] = useState(0);
 
@@ -54,7 +52,7 @@ function CourseDetails() {
     const count = GetAvgRating(response?.data?.courseDetails.ratingAndReviews)
     setAvgReviewCount(count)
   }, [response])
-  // console.log("avgReviewCount: ", avgReviewCount)
+
 
   // // Collapse all
 
