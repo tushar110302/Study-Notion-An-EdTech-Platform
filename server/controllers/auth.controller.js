@@ -226,9 +226,9 @@ const changePassword = async (req, res) => {
 
 const resetPasswordToken = async (req, res) => {
     try {   
-        const {email} = req.body;
+        const {email, url} = req.body;
+        console.log(email, url)
         const user = await User.findOne({email});
-
         if(!user){
             return res.status(404).json({
                 success: false,
@@ -241,7 +241,7 @@ const resetPasswordToken = async (req, res) => {
         user.resetPasswordTokenExpire = Date.now() + 3600000; 
         await user.save();
 
-        const resetPasswordUrl = `${process.env.FRONTEND_URL}/update-password/${resetToken}`;
+        const resetPasswordUrl = `${url}/update-password/${resetToken}`;
 
         await sendMail(email, `Your Link for email verification is ${resetPasswordUrl}. Please click this url to reset your password.`, "Password Reset Request");
 
