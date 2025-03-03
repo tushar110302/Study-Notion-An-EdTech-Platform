@@ -68,7 +68,7 @@ export const getInstructorData = async(token) => {
     })
     // console.log("GET_INSTRUCTOR_DATA_API API RESPONSE............", response)
     // console.log("getInstructorData" , response?.data)
-    result = response?.data?.data.courses
+    result = response?.data?.data;
   } catch (error) {
     console.log("GET_INSTRUCTOR_DATA_API API ERROR............", error)
     toast.error("Could Not Get Instructor Data")

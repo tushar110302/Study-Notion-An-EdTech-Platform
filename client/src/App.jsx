@@ -25,6 +25,7 @@ import Catalog from "./pages/Catalog"
 import CourseDetails from "./pages/CourseDetails"
 import VideoDetails from "./components/ViewCourse/VideoDetails"
 import ViewCourse from "./pages/ViewCourse"
+import Instructor from "./components/Dashboard/Instructor"
 
 function App() {
   const {user} = useSelector(state => state.profile);
@@ -69,7 +70,7 @@ function App() {
               <>
                 <Route path="add-course"  element={<AddCourse/>}/>
                 <Route path="my-courses"  element={<MyCourses/>}/>
-                <Route path="instructor"  element={<Cart/>}/>
+                <Route path="instructor"  element={<Instructor/>}/>
                 <Route path="edit-course/:courseId" element={<EditCourse />}/>
               </>
           }

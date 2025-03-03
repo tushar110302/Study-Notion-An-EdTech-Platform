@@ -2,6 +2,7 @@ import { Profile } from "../models/profile.model.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import {CourseProgress} from "../models/courseProgress.model.js";
+import {Course} from "../models/course.model.js";
 import { convertSecondsToDuration } from '../utils/secToDuration.js';
 
 const updateProfile = async (req, res) => {
@@ -175,4 +176,39 @@ const getEnrolledCourses = async (req, res) => {
         });
     }   
 }
-export { updateProfile, deleteAccount ,getUserDetails, updateDisplayPicture, getEnrolledCourses};
+const instructorDashboard = async (req, res) => {
+    try {
+      const courseDetails = await Course.find({ instructor: req.user._id })
+  
+      const courseData = courseDetails.map((course) => {
+        const totalStudentsEnrolled = course.studentsEnrolled.length;
+        const totalAmountGenerated = totalStudentsEnrolled * course.price;
+  
+        // Create a new object with the additional fields
+        const courseDataWithStats = {
+          _id: course._id,
+          courseName: course.courseName,
+          courseDescription: course.courseDescription,
+          // Include other course properties as needed
+          totalStudentsEnrolled,
+          totalAmountGenerated,
+        }
+  
+        return courseDataWithStats
+      })
+  
+      return res.status(200).json({ 
+        success: true,
+        message: "Instructor Dashboard Data fetched Successfully",
+        data: courseData 
+    })
+    } 
+    catch (error) {
+      console.error(error)
+      res.status(500).json({
+         success: false,
+         message: "Server Error" 
+        })
+    }
+  }
+export { updateProfile, deleteAccount ,getUserDetails, updateDisplayPicture, getEnrolledCourses, instructorDashboard};
