@@ -23,7 +23,6 @@ function VerifyEmail() {
     async function handleSubmit(e){
         e.preventDefault();
         const {email, firstName, lastName, password, accountType} = signupData;
-        // console.log(email, firstName, lastName, password, accountType)
         await signup(firstName, lastName, email, password, otp, accountType, navigate, dispatch);
     }
 

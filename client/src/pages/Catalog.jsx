@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
-
 import Footer from "../components/Footer"
 import Course_Card from "../components/Catalog/Course_Card"
 import Course_Slider from "../components/Catalog/Course_Slider"
-
 import { getCatalogPageData } from "../services/operations/pageAndComponntDatas"
 import Error from "./Error"
 import { fetchCourseCategories } from "../services/operations/courseDetailsAPI"
@@ -22,7 +20,6 @@ function Catalog() {
       const res = await fetchCourseCategories();
       const category_id = res.filter((ele) => ele.name.split(" ").join("-").toLowerCase() === catalogName)[0]._id;
       setCategoryId(category_id);
-
     } 
     catch (error) {
       console.log("Could not fetch Categories.", error);
@@ -30,10 +27,7 @@ function Catalog() {
   }
   const getCatalogData = async () => {
     try {
-      // console.log(categoryId)
       const res = await getCatalogPageData(categoryId);
-      // console.log("CATALOG DATA FETCHED");
-      // console.log(res);
       setCatalogPageData(res);
     } 
     catch (error) {

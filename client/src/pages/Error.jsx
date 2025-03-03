@@ -1,5 +1,6 @@
 import img from "../assets/Images/404.svg"
 import { useNavigate } from "react-router-dom";
+
 function Error() {
   const navigate = useNavigate();
     return (

@@ -2,7 +2,6 @@ import React from 'react'
 import FormTemplate from '../components/Auth/FormTemplate'
 import signupImg from "../assets/Images/signup.webp"
 
-
 function Signup() {
 
   return (

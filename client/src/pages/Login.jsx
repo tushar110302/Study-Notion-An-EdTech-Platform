@@ -2,7 +2,6 @@ import React from 'react'
 import FormTemplate from '../components/Auth/FormTemplate'
 import loginImg from "../assets/Images/login.webp"
 
-
 function Login() {
 
   return (

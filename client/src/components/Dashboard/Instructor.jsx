@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
-
 import { fetchInstructorCourses } from "../../services/operations/courseDetailsAPI"
 import { getInstructorData } from "../../services/operations/profileAPI"
 import InstructorChart from "./InstructorDashboard/InstructorChart"
@@ -13,29 +12,26 @@ export default function Instructor() {
   const [instructorData, setInstructorData] = useState(null)
   const [courses, setCourses] = useState([])
 
+  const getInstructorData = async () => {
+    setLoading(true);
+    const instructorApiData = await getInstructorData(token);
+    const result = await fetchInstructorCourses(token);
+    // console.log(instructorApiData)
+    if (instructorApiData.length) {
+      setInstructorData(instructorApiData);
+    }
+    if (result) {
+      setCourses(result);
+    }
+    setLoading(false);
+  }
   useEffect(() => {
-    ;(async () => {
-      setLoading(true)
-      const instructorApiData = await getInstructorData(token)
-      const result = await fetchInstructorCourses(token)
-      console.log(instructorApiData)
-      if (instructorApiData.length) setInstructorData(instructorApiData)
-      if (result) {
-        setCourses(result)
-      }
-      setLoading(false)
-    })()
+    getInstructorData();
   }, [])
 
-  const totalAmount = instructorData?.reduce(
-    (acc, curr) => acc + curr.totalAmountGenerated,
-    0
-  )
+  const totalAmount = instructorData?.reduce((acc, curr) => acc + curr.totalAmountGenerated, 0);
 
-  const totalStudents = instructorData?.reduce(
-    (acc, curr) => acc + curr.totalStudentsEnrolled,
-    0
-  )
+  const totalStudents = instructorData?.reduce((acc, curr) => acc + curr.totalStudentsEnrolled, 0);
 
   return (
     <div>
@@ -63,7 +59,7 @@ export default function Instructor() {
                 </p>
               </div>
             )}
-            {/* Total Statistics */}
+
             <div className="flex min-w-[250px] flex-col rounded-md bg-richblack-800 p-6">
               <p className="text-lg font-bold text-richblack-5">Statistics</p>
               <div className="mt-4 space-y-4">
@@ -89,7 +85,7 @@ export default function Instructor() {
             </div>
           </div>
           <div className="rounded-md bg-richblack-800 p-6">
-            {/* Render 3 courses */}
+
             <div className="flex items-center justify-between">
               <p className="text-lg font-bold text-richblack-5">Your Courses</p>
               <Link to="/dashboard/my-courses">

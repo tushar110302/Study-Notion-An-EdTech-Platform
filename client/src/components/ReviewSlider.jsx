@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react"
 import ReactStars from "react-stars"
 
 import { Swiper, SwiperSlide } from "swiper/react"
+import { Autoplay, FreeMode, Pagination } from "swiper/modules"
 import "swiper/css"
 import "swiper/css/free-mode"
 import "swiper/css/pagination"
 
 import { FaStar } from "react-icons/fa"
 
-import { Autoplay, FreeMode, Pagination } from "swiper/modules"
-
-// Get apiFunction and the endpoint
 import { apiConnector } from "../services/apiConnector"
 import { ratingsEndpoints } from "../services/api"
 
@@ -27,8 +25,6 @@ function ReviewSlider() {
   useEffect(() => {
     fetchData();
   }, [])
-
-  // console.log(reviews)
 
   return (
     <div className="text-white">
@@ -87,7 +83,6 @@ function ReviewSlider() {
               </SwiperSlide>
             )
           })}
-          {/* <SwiperSlide>Slide 1</SwiperSlide> */}
         </Swiper>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux"
 import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table"
-
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import { useState } from "react"
 import { FaCheck } from "react-icons/fa"
@@ -8,7 +7,6 @@ import { FiEdit2 } from "react-icons/fi"
 import { HiClock } from "react-icons/hi"
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { useNavigate } from "react-router-dom"
-
 import { formattedDate } from "../../../utils/dateFormatter"
 import { deleteCourse, fetchInstructorCourses } from "../../../services/operations/courseDetailsAPI"
 import { COURSE_STATUS } from "../../../utils/constants"
@@ -25,6 +23,7 @@ export default function CoursesTable({ courses, setCourses }) {
     setLoading(true);
     await deleteCourse({ courseId: courseId }, token);
     const result = await fetchInstructorCourses(token);
+    console.log(result);
     if (result) {
       setCourses(result);
     }
@@ -99,8 +98,8 @@ export default function CoursesTable({ courses, setCourses }) {
                     )}
                   </div>
                 </Td>
-                <Td className="flex items-center text-sm font-medium text-richblack-100">
-                  2hr 30min
+                <Td className="flex items-center mx-auto text-sm font-medium text-richblack-100">
+                  {course.totalDuration}
                 </Td>
                 <Td className=" flex items-center text-sm font-medium text-richblack-100">
                   ₹{course.price}

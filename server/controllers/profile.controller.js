@@ -178,37 +178,33 @@ const getEnrolledCourses = async (req, res) => {
 }
 const instructorDashboard = async (req, res) => {
     try {
-      const courseDetails = await Course.find({ instructor: req.user._id })
+        const courseDetails = await Course.find({ instructor: req.user._id });
   
-      const courseData = courseDetails.map((course) => {
-        const totalStudentsEnrolled = course.studentsEnrolled.length;
-        const totalAmountGenerated = totalStudentsEnrolled * course.price;
+        const courseData = courseDetails.map((course) => {
+            const totalStudentsEnrolled = course.studentsEnrolled.length;
+            const totalAmountGenerated = totalStudentsEnrolled * course.price;
+
+            const courseDataWithStats = {
+                _id: course._id,
+                courseName: course.courseName,
+                courseDescription: course.courseDescription,
+                totalStudentsEnrolled,
+                totalAmountGenerated,
+            }
+            return courseDataWithStats;
+        })
   
-        // Create a new object with the additional fields
-        const courseDataWithStats = {
-          _id: course._id,
-          courseName: course.courseName,
-          courseDescription: course.courseDescription,
-          // Include other course properties as needed
-          totalStudentsEnrolled,
-          totalAmountGenerated,
-        }
-  
-        return courseDataWithStats
-      })
-  
-      return res.status(200).json({ 
-        success: true,
-        message: "Instructor Dashboard Data fetched Successfully",
-        data: courseData 
-    })
+        return res.status(200).json({ 
+            success: true,
+            message: "Instructor Dashboard Data fetched Successfully",
+            data: courseData 
+        })
     } 
     catch (error) {
-      console.error(error)
-      res.status(500).json({
-         success: false,
-         message: "Server Error" 
-        })
+        return res.status(500).json({
+            success: false,
+            message: "Server Error" 
+        }); 
     }
   }
 export { updateProfile, deleteAccount ,getUserDetails, updateDisplayPicture, getEnrolledCourses, instructorDashboard};

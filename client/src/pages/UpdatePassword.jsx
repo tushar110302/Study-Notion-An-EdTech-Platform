@@ -15,7 +15,6 @@ function UpdatePassword() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-
   function changeHandler(e){
     setFormData((prevData) => ({
       ...prevData,

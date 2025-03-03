@@ -4,7 +4,6 @@ import { HiOutlineGlobeAlt } from "react-icons/hi"
 import  ReactMarkdown  from "react-markdown"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-
 import ConfirmationModal from "../components/ConfirmationModal"
 import Footer from "../components/Footer"
 import RatingStars from "../components/RatingStars"

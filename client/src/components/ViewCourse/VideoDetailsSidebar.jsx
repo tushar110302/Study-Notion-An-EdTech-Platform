@@ -3,7 +3,6 @@ import { BsChevronDown } from "react-icons/bs"
 import { IoIosArrowBack } from "react-icons/io"
 import { useSelector } from "react-redux"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-
 import IconBtn from "../IconBtn"
 
 export default function VideoDetailsSidebar({ setReviewModal }) {
@@ -30,9 +29,7 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
       const currentSectionIndx = courseSectionData.findIndex(
         (data) => data._id === sectionId
       )
-      const currentSubSectionIndx = courseSectionData?.[
-        currentSectionIndx
-      ]?.subSections.findIndex((data) => data._id === subSectionId)
+      const currentSubSectionIndx = courseSectionData?.[currentSectionIndx]?.subSections.findIndex((data) => data._id === subSectionId)
       const activeSubSectionId = courseSectionData[currentSectionIndx]?.subSections?.[currentSubSectionIndx]?._id
 
       setActiveStatus(courseSectionData?.[currentSectionIndx]?._id)

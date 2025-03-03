@@ -205,22 +205,42 @@ const getFullCourseDetails = async (req, res) => {
         success: false,
         message: error.message,
       })
-    }
+    } 
 }
 const getInstructorCourses = async (req, res) => {
     try {
 
       const instructorId = req.user._id
-      const instructorCourses = await Course.find({instructor: instructorId,}).sort({ createdAt: -1 })
-
-      res.status(200).json({
+      const instructorCourses = await Course.find({instructor: instructorId}).sort({createdAt: -1})
+      .populate({
+        path: "sections",
+        populate: {
+          path: "subSections",
+        }
+      });
+      for(let i = 0; i < instructorCourses.length; i++) {
+        
+        instructorCourses[i]=instructorCourses[i].toObject();
+        let totalDurationInSeconds = 0;
+        instructorCourses[i].sections.forEach((section) => {
+          section.subSections.forEach((subSection) => {
+            const timeDurationInSeconds = parseInt(subSection.duration);
+            totalDurationInSeconds += timeDurationInSeconds;
+          })
+        })
+        const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+        
+        instructorCourses[i].totalDuration = totalDuration;
+      }
+      
+      return res.status(200).json({
         success: true,
         data: instructorCourses,
       })
 
     } 
     catch (error) {
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
         message: "Failed to retrieve instructor courses",
         error: error.message,

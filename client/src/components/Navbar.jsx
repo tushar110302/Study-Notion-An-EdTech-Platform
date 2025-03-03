@@ -14,8 +14,6 @@ function Navbar(){
     const {totalItems} = useSelector(state => state.cart)
     const [catalogLinks, setCatalogLinks] = useState([])
 
-    // console.log(token , user, totalItems)
-
     async function fetchCatalogLinks(){
         try {
             const res = await fetchCourseCategories();
@@ -30,15 +28,14 @@ function Navbar(){
         fetchCatalogLinks();
     }, [])
 
-
     return(
         <header  className="border-b border-richblack-700">
-            <nav className=" flex flex-wrap justify-between items-center mx-auto py-2 px-10 w-11/12">
+            <nav className=" flex flex-wrap justify-between items-center mx-auto py-4 px-10 w-11/12">
                 <Link to="/">
                     <img src={logo} className="mr-3 h-8" alt="Logo" />
                 </Link>
-                <div className="lg:block hidden">
-                    <ul className='text-richblack-100 flex gap-8 '>
+                <div className="md:block hidden">
+                    <ul className='text-richblack-100 flex lg:gap-8 gap-4'>
                         <li>
                             <NavLink to="/" className={ ({isActive}) => ` ${isActive ? "text-yellow-50" : "text-richblack-25 " } `}>Home</NavLink>
                         </li>
@@ -73,7 +70,7 @@ function Navbar(){
                         </li>
                     </ul>
                 </div>
-                <div className='md:flex items-center gap-4 hidden'>
+                <div className='sm:flex items-center gap-4 hidden'>
                     {
                         user && user?.accountType !== "Instructor" &&
                         <Link to={"/dashboard/cart"} className="relative">
@@ -103,14 +100,11 @@ function Navbar(){
                                 </button>
                             </Link>
                     }
+                    
+                </div>
                     {
                         token && <ProfileDropDown />
                     }
-                    
-                </div>
-                <button className="mr-4 md:hidden">
-                    <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
-                </button>
             </nav>
         </header>
     )
