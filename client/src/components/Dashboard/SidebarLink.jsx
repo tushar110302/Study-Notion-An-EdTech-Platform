@@ -1,6 +1,7 @@
 import * as Icons from "react-icons/vsc"
 import { useDispatch } from "react-redux"
 import { NavLink } from "react-router-dom"
+import { resetCourseState } from "../../slices/courseSlice";
 
 function SidebarLink({link, icon}) {
     const Icon = Icons[icon];
