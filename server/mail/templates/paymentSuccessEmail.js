@@ -67,7 +67,7 @@ export const paymentSuccessEmail = (name, amount, orderId, paymentId) => {
     
     <body>
         <div class="container">
-            <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo" src={${logo}}
+            <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo" src="${logo}"
                     alt="StudyNotion Logo"></a>
             <div class="message">Course Payment Confirmation</div>
             <div class="body">

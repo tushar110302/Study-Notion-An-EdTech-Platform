@@ -57,7 +57,7 @@ export const passwordUpdated = (email, name) => {
     <body>
         <div class="container">
             <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo"
-                    src={${logo}} alt="StudyNotion Logo"></a>
+                    src="${logo}" alt="StudyNotion Logo"></a>
             <div class="message">Password Update Confirmation</div>
             <div class="body">
                 <p>Hey ${name},</p>
