@@ -1,4 +1,3 @@
-import logo from '../../../client/src/assets/Logo/rzp_logo.png'
 export const otpTemplate = (otp) => {
 	return `<!DOCTYPE html>
 	<html>
@@ -68,7 +67,7 @@ export const otpTemplate = (otp) => {
 	<body>
 		<div class="container">
 			<a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo"
-					src={${logo}} alt="StudyNotion Logo"></a>
+					src="https://res.cloudinary.com/tushar1103/image/upload/v1741265664/Server%20Uploads/vuv1fiwziqgd5yqmd0yo.png" alt="StudyNotion Logo"></a>
 			<div class="message">OTP Verification Email</div>
 			<div class="body">
 				<p>Dear User,</p>
