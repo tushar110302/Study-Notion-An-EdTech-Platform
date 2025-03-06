@@ -88,8 +88,6 @@ export const contactUsTemplate = (
               <p>Message: ${message}</p>
               <p>We appreciate your interest and will get back to you shortly. </p>
           </div>
-          <div class="support">If you have any further questions or need immediate assistance, please feel free to reach
-              out to us at <a href="mailto:info@studynotion.com">info@studynotion.com</a>. We are here to help!</div>
       </div>
   </body>
   

@@ -1,4 +1,3 @@
-import logo from '../../../client/src/assets/Logo/rzp_logo.png'
 export const passwordUpdated = (email, name) => {
 	return `<!DOCTYPE html>
     <html>
@@ -57,17 +56,13 @@ export const passwordUpdated = (email, name) => {
     <body>
         <div class="container">
             <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo"
-                    src="${logo}" alt="StudyNotion Logo"></a>
+                    src="https://res.cloudinary.com/tushar1103/image/upload/v1741265664/Server%20Uploads/vuv1fiwziqgd5yqmd0yo.png" alt="StudyNotion Logo"></a>
             <div class="message">Password Update Confirmation</div>
             <div class="body">
                 <p>Hey ${name},</p>
                 <p>Your password has been successfully updated for the email <span class="highlight">${email}</span>.
                 </p>
                 <p>If you did not request this password change, please contact us immediately to secure your account.</p>
-            </div>
-            <div class="support">If you have any questions or need further assistance, please feel free to reach out to us
-                at
-                <a href="mailto:info@studynotion.com">info@studynotion.com</a>. We are here to help!
             </div>
         </div>
     </body>

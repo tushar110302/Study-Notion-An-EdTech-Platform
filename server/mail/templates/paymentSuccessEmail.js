@@ -67,7 +67,7 @@ export const paymentSuccessEmail = (name, amount, orderId, paymentId) => {
     
     <body>
         <div class="container">
-            <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo" src="${logo}"
+            <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo" src="https://res.cloudinary.com/tushar1103/image/upload/v1741265664/Server%20Uploads/vuv1fiwziqgd5yqmd0yo.png"
                     alt="StudyNotion Logo"></a>
             <div class="message">Course Payment Confirmation</div>
             <div class="body">
@@ -76,8 +76,6 @@ export const paymentSuccessEmail = (name, amount, orderId, paymentId) => {
                 <p>Your Payment ID is <b>${paymentId}</b></p>
                 <p>Your Order ID is <b>${orderId}</b></p>
             </div>
-            <div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-                    href="mailto:info@studynotion.com">info@studynotion.com</a>. We are here to help!</div>
         </div>
     </body>
     
