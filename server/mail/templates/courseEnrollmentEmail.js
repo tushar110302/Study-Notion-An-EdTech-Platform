@@ -68,7 +68,7 @@ export const courseEnrollmentEmail = (courseName, name) => {
     
     <body>
         <div class="container">
-            <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo" src="https://res.cloudinary.com/tushar1103/image/upload/v1741265664/Server%20Uploads/vuv1fiwziqgd5yqmd0yo.png"
+            <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo" src="https://res.cloudinary.com/tushar1103/image/upload/v1741265665/Server%20Uploads/jlnrpzeiqdv55jxtkysd.png"
                     alt="StudyNotion Logo"></a>
             <div class="message">Course Registration Confirmation</div>
             <div class="body">
