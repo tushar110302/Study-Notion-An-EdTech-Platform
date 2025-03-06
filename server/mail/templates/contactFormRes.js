@@ -3,8 +3,7 @@ export const contactUsTemplate = (
   firstname,
   lastname,
   message,
-  phoneNo,
-  countrycode
+  phoneNo
 ) => {
   return `<!DOCTYPE html>
   <html>
@@ -74,8 +73,8 @@ export const contactUsTemplate = (
   
   <body>
       <div class="container">
-          <a href="https://studynotion-edtech-project.vercel.app"><img class="logo"
-                  src="https://i.ibb.co/7Xyj3PC/logo.png" alt="StudyNotion Logo"></a>
+          <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo"
+                  src="../../../client/src/assets/Logo/rzp_logo.png" alt="StudyNotion Logo"></a>
           <div class="message">Contact Form Confirmation</div>
           <div class="body">
               <p>Dear ${firstname} ${lastname},</p>
