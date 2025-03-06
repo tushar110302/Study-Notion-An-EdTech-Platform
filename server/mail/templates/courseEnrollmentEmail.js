@@ -1,3 +1,4 @@
+import logo from '../../../client/src/assets/Logo/rzp_logo.png'
 export const courseEnrollmentEmail = (courseName, name) => {
     return `<!DOCTYPE html>
     <html>
@@ -67,7 +68,7 @@ export const courseEnrollmentEmail = (courseName, name) => {
     
     <body>
         <div class="container">
-            <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo" src="../../../client/src/assets/Logo/rzp_logo.png"
+            <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo" src={${logo}}
                     alt="StudyNotion Logo"></a>
             <div class="message">Course Registration Confirmation</div>
             <div class="body">

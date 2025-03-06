@@ -1,3 +1,4 @@
+import logo from '../../../client/src/assets/Logo/rzp_logo.png'
 export const contactUsTemplate = (
   email,
   firstname,
@@ -74,7 +75,7 @@ export const contactUsTemplate = (
   <body>
       <div class="container">
           <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo"
-                  src="../../../client/src/assets/Logo/rzp_logo.png" alt="StudyNotion Logo"></a>
+                  src={${logo}} alt="StudyNotion Logo"></a>
           <div class="message">Contact Form Confirmation</div>
           <div class="body">
               <p>Dear ${firstname} ${lastname},</p>

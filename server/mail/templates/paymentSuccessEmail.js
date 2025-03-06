@@ -1,3 +1,4 @@
+import logo from '../../../client/src/assets/Logo/rzp_logo.png'
 export const paymentSuccessEmail = (name, amount, orderId, paymentId) => {
   return `<!DOCTYPE html>
     <html>
@@ -66,7 +67,7 @@ export const paymentSuccessEmail = (name, amount, orderId, paymentId) => {
     
     <body>
         <div class="container">
-            <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo" src="../../../client/src/assets/Logo/rzp_logo.png"
+            <a href="https://study-notion-frontend-pi-bice.vercel.app"><img class="logo" src={${logo}}
                     alt="StudyNotion Logo"></a>
             <div class="message">Course Payment Confirmation</div>
             <div class="body">
