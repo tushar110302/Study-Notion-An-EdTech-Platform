@@ -1,4 +1,4 @@
-import logo from '../../../client/src/assets/Logo/rzp_logo.png'
+
 export const paymentSuccessEmail = (name, amount, orderId, paymentId) => {
   return `<!DOCTYPE html>
     <html>
